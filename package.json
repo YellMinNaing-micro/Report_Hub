@@ -1,12 +1,14 @@
 {
   "name": "report-hub",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
+    "start:offline": "powershell -Command \"$env:EXPO_NO_DOCTOR='1'; $env:EXPO_OFFLINE='1'; npx expo start --offline\"",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@gluestack-style/react": "^1.0.57",
