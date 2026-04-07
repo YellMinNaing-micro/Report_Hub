@@ -58,41 +58,41 @@ export default function CameraScreen() {
 
   return (
     <View className="flex-1 bg-black">
-      <CameraView ref={cameraRef} style={{ flex: 1 }} facing={facing}>
-        <View className="flex-1 justify-between p-5">
-          <View className="rounded-xl bg-black/40 p-3">
-            <Text className="text-center text-sm text-white">
-              Captured images in report: {images.length}
-            </Text>
-          </View>
+      <CameraView ref={cameraRef} style={{ flex: 1 }} facing={facing} />
 
-          <View className="mb-6 gap-3">
-            <TouchableOpacity
-              onPress={takePhoto}
-              disabled={isCapturing}
-              className="h-16 items-center justify-center rounded-full bg-white"
-            >
-              <Text className="text-base font-semibold text-slate-900">
-                {isCapturing ? "Capturing..." : "Capture Photo"}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={toggleFacing}
-              className="h-12 items-center justify-center rounded-2xl bg-black/50"
-            >
-              <Text className="text-sm font-medium text-white">Flip Camera</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => router.back()}
-              className="h-12 items-center justify-center rounded-2xl bg-brand-500"
-            >
-              <Text className="text-sm font-semibold text-white">Done</Text>
-            </TouchableOpacity>
-          </View>
+      <View className="absolute inset-0 justify-between p-5">
+        <View className="rounded-xl bg-black/40 p-3">
+          <Text className="text-center text-sm text-white">
+            Captured images in report: {images.length}
+          </Text>
         </View>
-      </CameraView>
+
+        <View className="mb-6 gap-3">
+          <TouchableOpacity
+            onPress={takePhoto}
+            disabled={isCapturing}
+            className="h-16 items-center justify-center rounded-full bg-white"
+          >
+            <Text className="text-base font-semibold text-slate-900">
+              {isCapturing ? "Capturing..." : "Capture Photo"}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={toggleFacing}
+            className="h-12 items-center justify-center rounded-2xl bg-black/50"
+          >
+            <Text className="text-sm font-medium text-white">Flip Camera</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => router.back()}
+            className="h-12 items-center justify-center rounded-2xl bg-brand-500"
+          >
+            <Text className="text-sm font-semibold text-white">Done</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 }
