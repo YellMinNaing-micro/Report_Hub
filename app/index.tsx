@@ -26,7 +26,7 @@ export default function HomeScreen() {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ["images"],
       allowsMultipleSelection: true,
       selectionLimit: 0,
       quality: 1,
