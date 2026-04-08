@@ -21,26 +21,27 @@ export function AnimatedTabIcon({ icon, label, focused }: AnimatedTabIconProps) 
   }, [focused, progress]);
 
   const containerStyle = useAnimatedStyle(() => ({
-    backgroundColor: `rgba(37, 99, 235, ${interpolate(progress.value, [0, 1], [0, 0.14])})`,
+    backgroundColor: `rgba(255, 255, 255, ${interpolate(progress.value, [0, 1], [0.55, 1])})`,
     transform: [
-      { translateY: interpolate(progress.value, [0, 1], [0, -2]) },
-      { scale: interpolate(progress.value, [0, 1], [1, 1.03]) },
+      { translateY: interpolate(progress.value, [0, 1], [0, -1]) },
+      { scale: interpolate(progress.value, [0, 1], [1, 1.01]) },
     ],
   }));
 
   const labelStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(progress.value, [0, 1], [0.72, 1]),
-    transform: [{ translateX: interpolate(progress.value, [0, 1], [0, 2]) }],
+    opacity: interpolate(progress.value, [0, 1], [0.85, 1]),
   }));
 
   return (
     <Animated.View
       style={containerStyle}
-      className="min-w-[108px] flex-row items-center justify-center gap-2 rounded-full px-4 py-3"
+      className="min-w-[96px] items-center justify-center rounded-2xl px-3 py-2"
     >
-      {icon}
+      <Animated.View style={{ marginBottom: 4 }}>{icon}</Animated.View>
       <Animated.View style={labelStyle}>
-        <Text className={focused ? "text-sm font-bold text-blue-600" : "text-sm font-semibold text-slate-500"}>
+        <Text
+          className={focused ? "text-[11px] font-semibold text-slate-900" : "text-[11px] font-medium text-slate-500"}
+        >
           {label}
         </Text>
       </Animated.View>
