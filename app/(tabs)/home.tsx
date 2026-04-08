@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import * as Sharing from "expo-sharing";
 import { Box, Heading } from "@gluestack-ui/themed";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { ActionButton } from "@/components/action-button";
 import { ImagePreviewGrid } from "@/components/image-preview-grid";
@@ -78,7 +79,7 @@ export default function HomeScreen() {
 
   return (
     <ScreenShell>
-      <View className="gap-4">
+      <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
         <Box className="rounded-3xl bg-white p-5 shadow-sm">
           <Heading size="lg" className="text-slate-900">
             Image To PDF Report
@@ -120,7 +121,7 @@ export default function HomeScreen() {
             </Text>
           </View>
         ) : null}
-      </View>
+      </Animated.View>
     </ScreenShell>
   );
 }
