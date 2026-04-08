@@ -3,11 +3,12 @@ import { Alert, Text, View } from "react-native";
 import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import * as Sharing from "expo-sharing";
-import { Box, Heading } from "@gluestack-ui/themed";
+import { Heading } from "@gluestack-ui/themed";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { ActionButton } from "@/components/action-button";
 import { ImagePreviewGrid } from "@/components/image-preview-grid";
+import { NeumorphCard } from "@/components/neumorph-card";
 import { ScreenShell } from "@/components/screen-shell";
 import { useImageSelection } from "@/lib/image-selection-context";
 import { generatePdfFromImages } from "@/utils/pdf";
@@ -80,7 +81,7 @@ export default function HomeScreen() {
   return (
     <ScreenShell>
       <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
-        <Box className="rounded-3xl bg-white p-5 shadow-sm">
+        <NeumorphCard className="p-5">
           <Heading size="lg" className="text-slate-900">
             Image To PDF Report
           </Heading>
@@ -88,19 +89,19 @@ export default function HomeScreen() {
             Choose multiple gallery photos or capture one-by-one with camera, then generate one
             PDF file.
           </Text>
-        </Box>
+        </NeumorphCard>
 
         <View className="gap-3">
           <ActionButton title="Pick Images From Gallery" onPress={pickFromGallery} />
           <ActionButton title="Open Camera And Capture" onPress={() => router.push("/camera")} />
         </View>
 
-        <Box className="rounded-3xl bg-white p-4 shadow-sm">
+        <NeumorphCard className="p-4">
           <Text className="mb-3 text-base font-semibold text-slate-900">
             Selected Images ({images.length})
           </Text>
           <ImagePreviewGrid images={images} onRemove={removeImage} />
-        </Box>
+        </NeumorphCard>
 
         <View className="gap-3">
           <ActionButton
@@ -114,12 +115,12 @@ export default function HomeScreen() {
         </View>
 
         {pdfUri ? (
-          <View className="rounded-2xl border border-emerald-200 bg-emerald-50 p-3">
+          <NeumorphCard className="border-emerald-100 bg-[#e7efe8] p-3">
             <Text className="text-xs font-medium text-emerald-800">Saved PDF</Text>
             <Text selectable className="mt-1 text-xs text-emerald-700">
               {pdfUri}
             </Text>
-          </View>
+          </NeumorphCard>
         ) : null}
       </Animated.View>
     </ScreenShell>
