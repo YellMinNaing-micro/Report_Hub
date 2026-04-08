@@ -10,6 +10,7 @@ export function ScreenShell({ children }: PropsWithChildren) {
       className="flex-1"
       style={{ backgroundColor: colors.background }}
       contentContainerClassName="px-4 py-8"
+      showsVerticalScrollIndicator={false}
     >
       <View
         className="absolute -left-10 top-6 h-32 w-32 rounded-full"
