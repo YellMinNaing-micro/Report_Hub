@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { View, ViewStyle } from "react-native";
+import { useTheme } from "@/lib/theme-context";
 
 type NeumorphCardProps = PropsWithChildren<{
   className?: string;
@@ -13,24 +14,28 @@ export function NeumorphCard({
   inset = false,
   style,
 }: NeumorphCardProps) {
+  const { colors, isDark } = useTheme();
+
   return (
     <View
-      className={`rounded-[24px] border bg-[#f3f6fa] ${className}`}
+      className={`rounded-[24px] border ${className}`}
       style={[
         inset
           ? {
-              borderColor: "#e2e8f0",
-              shadowColor: "#ffffff",
-              shadowOffset: { width: -2, height: -2 },
-              shadowOpacity: 0.45,
-              shadowRadius: 6,
+              backgroundColor: colors.surfaceInset,
+              borderColor: colors.border,
+              shadowColor: colors.shadowSoft,
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: isDark ? 0.08 : 0.18,
+              shadowRadius: 4,
               elevation: 1,
             }
           : {
-              borderColor: "#f8fafc",
-              shadowColor: "#64748b",
+              backgroundColor: colors.surface,
+              borderColor: colors.borderSoft,
+              shadowColor: colors.shadow,
               shadowOffset: { width: 0, height: 10 },
-              shadowOpacity: 0.08,
+              shadowOpacity: isDark ? 0.25 : 0.08,
               shadowRadius: 20,
               elevation: 3,
             },
