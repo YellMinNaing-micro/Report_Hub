@@ -33,9 +33,9 @@ export default function LoginScreen() {
       <View className="min-h-full justify-center py-10">
         <NeumorphCard className="p-7">
           <View className="items-center">
-            <NeumorphCard inset className="h-20 w-20 items-center justify-center rounded-full">
-              <Text className="text-2xl font-bold text-slate-700">RH</Text>
-            </NeumorphCard>
+            <View className="h-16 w-16 items-center justify-center rounded-2xl bg-blue-600">
+              <Text className="text-2xl font-bold text-white">RH</Text>
+            </View>
 
             <Heading size="xl" className="mt-5 text-center text-slate-900">
               Report Hub Login
@@ -48,7 +48,7 @@ export default function LoginScreen() {
           <View className="mt-7 gap-4">
             <View>
               <Text className="mb-2 text-sm font-medium text-slate-700">Username</Text>
-              <NeumorphCard inset className="rounded-[22px] px-4 py-1">
+              <NeumorphCard inset className="rounded-[18px] bg-white px-4 py-1">
                 <TextInput
                   value={username}
                   onChangeText={setUsername}
@@ -62,7 +62,7 @@ export default function LoginScreen() {
 
             <View>
               <Text className="mb-2 text-sm font-medium text-slate-700">Password</Text>
-              <NeumorphCard inset className="rounded-[22px] px-4 py-1">
+              <NeumorphCard inset className="rounded-[18px] bg-white px-4 py-1">
                 <TextInput
                   value={password}
                   onChangeText={setPassword}
