@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { router } from "expo-router";
 import { Heading } from "@gluestack-ui/themed";
 import { LogOut, ShieldCheck, UserRound } from "lucide-react-native/icons";
@@ -8,6 +8,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 import { ActionButton } from "@/components/action-button";
 import { NeumorphCard } from "@/components/neumorph-card";
 import { ScreenShell } from "@/components/screen-shell";
+import { AppText } from "@/components/themed-text";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
 import { MoonStar, SunMedium } from "lucide-react-native/icons";
@@ -34,9 +35,9 @@ export default function ProfileScreen() {
           <Heading size="xl" className="mt-4" style={{ color: colors.text }}>
             Admin Profile
           </Heading>
-          <Text className="mt-2 text-center text-sm leading-6" style={{ color: colors.textMuted }}>
+          <AppText className="mt-2 text-center text-sm leading-6" tone="muted">
             Manage your Report Hub session and keep access under the default admin account.
-          </Text>
+          </AppText>
         </NeumorphCard>
 
         <NeumorphCard className="p-5">
@@ -49,21 +50,21 @@ export default function ProfileScreen() {
               <ShieldCheck color={colors.success} size={22} strokeWidth={2.2} />
             </NeumorphCard>
             <View className="flex-1">
-              <Text className="text-xs font-semibold uppercase tracking-wide" style={{ color: colors.textSubtle }}>
+              <AppText className="text-xs uppercase tracking-wide" tone="subtle" weight="semibold">
                 Signed In As
-              </Text>
-              <Text className="mt-1 text-lg font-semibold" style={{ color: colors.text }}>admin</Text>
+              </AppText>
+              <AppText className="mt-1 text-lg" weight="semibold">admin</AppText>
             </View>
           </View>
 
           <NeumorphCard inset className="mt-5 p-4">
-            <Text className="text-xs font-semibold uppercase tracking-wide" style={{ color: colors.textSubtle }}>
+            <AppText className="text-xs uppercase tracking-wide" tone="subtle" weight="semibold">
               Account Access
-            </Text>
-            <Text className="mt-2 text-sm leading-6" style={{ color: colors.textMuted }}>
+            </AppText>
+            <AppText className="mt-2 text-sm leading-6" tone="muted">
               This profile uses the default local credentials for the app. Use the logout button
               below whenever you want to lock the session and return to the login screen.
-            </Text>
+            </AppText>
           </NeumorphCard>
         </NeumorphCard>
 
@@ -77,12 +78,12 @@ export default function ProfileScreen() {
               )}
             </NeumorphCard>
             <View className="flex-1">
-              <Text className="text-base font-semibold" style={{ color: colors.text }}>
+              <AppText className="text-base" weight="semibold">
                 Theme
-              </Text>
-              <Text className="mt-1 text-sm" style={{ color: colors.textMuted }}>
+              </AppText>
+              <AppText className="mt-1 text-sm" tone="muted">
                 Switch between light and dark appearance.
-              </Text>
+              </AppText>
             </View>
           </View>
 
@@ -105,10 +106,10 @@ export default function ProfileScreen() {
               <LogOut color={colors.danger} size={20} strokeWidth={2.2} />
             </NeumorphCard>
             <View className="flex-1">
-              <Text className="text-base font-semibold" style={{ color: colors.text }}>End Session</Text>
-              <Text className="mt-1 text-sm" style={{ color: colors.textMuted }}>
+              <AppText className="text-base" weight="semibold">End Session</AppText>
+              <AppText className="mt-1 text-sm" tone="muted">
                 Sign out and go back to the login page.
-              </Text>
+              </AppText>
             </View>
           </View>
 
