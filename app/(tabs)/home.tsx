@@ -1,14 +1,12 @@
 import React, { useMemo, useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Pressable, TextInput, View } from "react-native";
 import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import * as Sharing from "expo-sharing";
-import { Heading } from "@gluestack-ui/themed";
-import { FileText } from "lucide-react-native";
+import { Camera, FileImage, FileText, Share2, UserRound } from "lucide-react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { ActionButton } from "@/components/action-button";
-import { FormField } from "@/components/form-field";
 import { ImagePreviewGrid } from "@/components/image-preview-grid";
 import { NeumorphCard } from "@/components/neumorph-card";
 import { ScreenShell } from "@/components/screen-shell";
@@ -23,7 +21,7 @@ export default function HomeScreen() {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [isRenamingPdf, setIsRenamingPdf] = useState(false);
   const [pdfUri, setPdfUri] = useState<string | null>(null);
-  const [pdfFileName, setPdfFileName] = useState("");
+  const [pdfFileName, setPdfFileName] = useState("REPORT_V1");
 
   const imageUris = useMemo(() => images.map((image) => image.uri), [images]);
   const hasImages = images.length > 0;
@@ -46,19 +44,18 @@ export default function HomeScreen() {
     if (!result.canceled && result.assets.length > 0) {
       addImages(result.assets.map((asset) => asset.uri), "gallery");
       setPdfUri(null);
-      setPdfFileName("");
     }
   };
 
   const generatePdf = async () => {
-    if (!images.length) {
+    if (!hasImages) {
       Alert.alert("No Images", "Please add at least one image first.");
       return;
     }
 
     try {
       setIsGeneratingPdf(true);
-      const newPdfUri = await generatePdfFromImages(imageUris);
+      const newPdfUri = await generatePdfFromImages(imageUris, pdfFileName);
       setPdfUri(newPdfUri);
       setPdfFileName(getPdfBaseName(newPdfUri));
       Alert.alert("PDF Ready", `Saved locally:\n${newPdfUri}`);
@@ -111,108 +108,135 @@ export default function HomeScreen() {
 
   return (
     <ScreenShell>
-      <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
-        <NeumorphCard className="p-5">
+      <Animated.View entering={FadeInDown.duration(260)} className="gap-5 pb-24">
+        <View className="flex-row items-center justify-between">
+          <View>
+            <AppText className="text-xs uppercase tracking-[1.5px]" tone="primary" weight="semibold">
+              Report Builder
+            </AppText>
+            <AppText className="mt-2 text-[34px] leading-9" weight="bold">
+              Report Hub
+            </AppText>
+          </View>
+          <Pressable
+            onPress={() => router.push("/(tabs)/profile")}
+            className="h-14 w-14 items-center justify-center rounded-full border"
+            style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+          >
+            <UserRound color={colors.textSubtle} size={22} strokeWidth={2.1} />
+          </Pressable>
+        </View>
+
+        <NeumorphCard className="rounded-[28px] p-6">
           <View className="flex-row items-start justify-between gap-4">
             <View className="flex-1">
-              <AppText className="text-xs uppercase tracking-[1.4px]" tone="primary" weight="semibold">
-                Report Builder
+              <AppText className="text-[34px] leading-9" weight="bold">
+                Image to PDF
               </AppText>
-              <Heading size="lg" className="mt-2" style={{ color: colors.text }}>
-                Image To PDF Report
-              </Heading>
-              <AppText className="mt-2 text-sm leading-6" tone="muted">
-                Choose photos, organize them, and generate a clean PDF report in seconds.
+              <AppText className="mt-3 text-base leading-7" tone="muted">
+                Combine your photos into a single professional PDF document.
               </AppText>
             </View>
-            <NeumorphCard
-              inset
+            <View
               className="h-14 w-14 items-center justify-center rounded-2xl"
-              style={{ backgroundColor: colors.primary }}
+              style={{ backgroundColor: colors.primarySoft }}
             >
-              <FileText color={colors.primaryText} size={24} strokeWidth={2.2} />
-            </NeumorphCard>
-          </View>
-
-          <View className="mt-5 flex-row gap-3">
-            <NeumorphCard inset className="flex-1 rounded-[20px] px-4 py-3">
-              <AppText className="text-xs uppercase tracking-wide" tone="subtle" weight="semibold">
-                Images
-              </AppText>
-              <AppText className="mt-1 text-lg" weight="semibold">
-                {images.length}
-              </AppText>
-            </NeumorphCard>
-            <NeumorphCard inset className="flex-1 rounded-[20px] px-4 py-3">
-              <AppText className="text-xs uppercase tracking-wide" tone="subtle" weight="semibold">
-                PDF
-              </AppText>
-              <AppText className="mt-1 text-lg" weight="semibold">
-                {hasPdf ? "Ready" : "Not Yet"}
-              </AppText>
-            </NeumorphCard>
-          </View>
-        </NeumorphCard>
-
-        <NeumorphCard className="p-4">
-          <AppText className="text-base" weight="semibold">
-            Add Images
-          </AppText>
-          <AppText className="mt-1 text-sm leading-6" tone="muted">
-            Import from gallery or capture new photos directly from the camera.
-          </AppText>
-
-          <View className="mt-4 gap-3">
-            <ActionButton title="Pick Images From Gallery" onPress={pickFromGallery} variant="outline" />
-            <ActionButton title="Open Camera And Capture" onPress={() => router.push("/camera")} variant="outline" />
-          </View>
-        </NeumorphCard>
-
-        <NeumorphCard className="p-4">
-          <View className="mb-3 flex-row items-center justify-between">
-            <AppText className="text-base" weight="semibold">
-              Selected Images
-            </AppText>
-            <NeumorphCard inset className="rounded-full px-3 py-1.5">
-              <AppText className="text-xs" tone="subtle" weight="semibold">
-                {images.length} total
-              </AppText>
-            </NeumorphCard>
-          </View>
-          <ImagePreviewGrid images={images} onRemove={removeImage} />
-
-          {hasImages ? (
-            <View className="mt-4">
-              <ActionButton
-                title="Clear All Images"
-                onPress={clearImages}
-                variant="outline"
-                action="negative"
-              />
+              <FileText color={colors.primary} size={24} strokeWidth={2.2} />
             </View>
-          ) : null}
-        </NeumorphCard>
-
-        <NeumorphCard className="p-4">
-          <AppText className="text-base" weight="semibold">
-            Build PDF
-          </AppText>
-          <AppText className="mt-1 text-sm leading-6" tone="muted">
-            Generate a PDF after selecting the images you want in the report.
-          </AppText>
-
-          <View className="mt-4">
-            <ActionButton
-              title={isGeneratingPdf ? "Generating PDF..." : "Generate PDF"}
-              onPress={generatePdf}
-              disabled={!hasImages}
-              loading={isGeneratingPdf}
-            />
           </View>
         </NeumorphCard>
+
+        <View className="flex-row gap-4">
+          <Pressable
+            onPress={pickFromGallery}
+            className="flex-1 rounded-[24px] border p-5"
+            style={{ backgroundColor: colors.surface, borderColor: colors.borderStrong }}
+          >
+            <View
+              className="h-12 w-12 items-center justify-center rounded-2xl"
+              style={{ backgroundColor: colors.primarySoft }}
+            >
+              <FileImage color={colors.primary} size={22} strokeWidth={2.2} />
+            </View>
+            <AppText className="mt-8 text-base" weight="semibold">
+              Gallery
+            </AppText>
+          </Pressable>
+
+          <Pressable
+            onPress={() => router.push("/camera")}
+            className="flex-1 rounded-[24px] border p-5"
+            style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+          >
+            <View
+              className="h-12 w-12 items-center justify-center rounded-2xl"
+              style={{ backgroundColor: colors.successSoft }}
+            >
+              <Camera color={colors.success} size={22} strokeWidth={2.2} />
+            </View>
+            <AppText className="mt-8 text-base" weight="semibold">
+              Camera
+            </AppText>
+          </Pressable>
+        </View>
+
+        <View>
+          <View className="mb-3 flex-row items-center justify-between">
+            <AppText className="text-xs uppercase tracking-[1.4px]" tone="subtle" weight="semibold">
+              Selected Images ({images.length})
+            </AppText>
+            {hasImages ? (
+              <Pressable onPress={clearImages}>
+                <AppText className="text-xs uppercase tracking-[1.1px]" tone="danger" weight="bold">
+                  Clear
+                </AppText>
+              </Pressable>
+            ) : null}
+          </View>
+
+          <ImagePreviewGrid images={images} onRemove={removeImage} />
+        </View>
+
+        <NeumorphCard className="rounded-[22px] px-4 py-3">
+          <View className="flex-row items-center gap-3">
+            <View
+              className="h-10 w-10 items-center justify-center rounded-xl"
+              style={{ backgroundColor: colors.backgroundSecondary }}
+            >
+              <FileText color={colors.textSubtle} size={18} strokeWidth={2.1} />
+            </View>
+            <View className="flex-1">
+              <AppText className="text-xs uppercase tracking-wide" tone="subtle" weight="semibold">
+                File Name
+              </AppText>
+              <View className="flex-row items-center pt-1">
+                <TextInput
+                value={pdfFileName}
+                onChangeText={setPdfFileName}
+                autoCapitalize="characters"
+                placeholder="REPORT_V1"
+                  placeholderTextColor={colors.textSubtle}
+                  className="flex-1 px-0 py-1 text-right text-sm font-semibold"
+                  style={{ color: colors.text, textAlign: "right" }}
+                />
+                <AppText className="pl-2 text-sm" tone="muted" weight="medium">
+                  .pdf
+                </AppText>
+              </View>
+            </View>
+          </View>
+        </NeumorphCard>
+
+        <ActionButton
+          title={isGeneratingPdf ? "Generating PDF Report" : "Generate PDF Report"}
+          onPress={generatePdf}
+          disabled={!hasImages}
+          loading={isGeneratingPdf}
+          icon={<FileText color={colors.primaryText} size={18} strokeWidth={2.2} />}
+        />
 
         {hasPdf ? (
-          <NeumorphCard className="p-3" style={{ backgroundColor: colors.successSoft }}>
+          <NeumorphCard className="rounded-[24px] p-4" style={{ backgroundColor: colors.successSoft }}>
             <View className="flex-row items-center justify-between">
               <AppText className="text-xs" tone="success" weight="medium">
                 Saved PDF
@@ -224,21 +248,15 @@ export default function HomeScreen() {
               </NeumorphCard>
             </View>
 
-            <View className="mt-3">
-              <FormField
-                label="File Name"
-                value={pdfFileName}
-                onChangeText={setPdfFileName}
-                autoCapitalize="none"
-                placeholder="report"
-                suffix=".pdf"
-              />
-            </View>
-
             <View className="mt-3 gap-3">
-              <ActionButton title="Share PDF" onPress={sharePdf} variant="outline" />
               <ActionButton
-                title={isRenamingPdf ? "Renaming PDF..." : "Rename PDF File"}
+                title="Share PDF"
+                onPress={sharePdf}
+                variant="outline"
+                icon={<Share2 color={colors.textMuted} size={18} strokeWidth={2.2} />}
+              />
+              <ActionButton
+                title={isRenamingPdf ? "Updating Saved File Name" : "Update Saved File Name"}
                 onPress={handleRenamePdf}
                 disabled={!pdfFileName.trim()}
                 loading={isRenamingPdf}
@@ -246,7 +264,7 @@ export default function HomeScreen() {
               />
             </View>
 
-            <AppText selectable className="mt-1 text-xs" tone="success">
+            <AppText selectable className="mt-3 text-xs" tone="success">
               {pdfUri}
             </AppText>
           </NeumorphCard>
