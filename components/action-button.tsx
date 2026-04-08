@@ -36,23 +36,23 @@ export function ActionButton({
         className={`min-h-14 flex-row items-center justify-center rounded-full border px-6 py-4 ${
           isOutline
             ? isNegative
-              ? "border-rose-300 bg-[#e8edf3]"
-              : "border-slate-300 bg-[#e8edf3]"
+              ? "border-rose-300 bg-white"
+              : "border-slate-200 bg-white"
             : isNegative
               ? "border-rose-500 bg-rose-500"
-              : "border-white/70 bg-[#e8edf3]"
+              : "border-blue-600 bg-blue-600"
         }`}
         style={{
-          shadowColor: isOutline ? "#ffffff" : "#94a3b8",
-          shadowOffset: isOutline ? { width: -4, height: -4 } : { width: 8, height: 8 },
-          shadowOpacity: isOutline ? 0.85 : 0.2,
-          shadowRadius: isOutline ? 10 : 14,
-          elevation: isOutline ? 2 : 6,
+          shadowColor: "#64748b",
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: isOutline ? 0.05 : 0.16,
+          shadowRadius: 16,
+          elevation: isOutline ? 1 : 4,
         }}
       >
         {loading ? (
           <ActivityIndicator
-            color={isNegative ? "#e11d48" : isOutline ? "#475569" : "#334155"}
+            color={isNegative ? "#e11d48" : isOutline ? "#475569" : "#ffffff"}
             style={{ marginRight: 8 }}
           />
         ) : null}
@@ -64,7 +64,7 @@ export function ActionButton({
                 : "text-slate-700"
               : isNegative
                 ? "text-white"
-                : "text-slate-800"
+                : "text-white"
           }`}
         >
           {title}
