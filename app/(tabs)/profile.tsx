@@ -2,9 +2,9 @@ import React from "react";
 import { Text, View } from "react-native";
 import { router } from "expo-router";
 import { Box, Heading } from "@gluestack-ui/themed";
-import LogOut from "lucide-react-native/dist/esm/icons/log-out";
-import ShieldCheck from "lucide-react-native/dist/esm/icons/shield-check";
-import UserRound from "lucide-react-native/dist/esm/icons/user-round";
+import LogOut from "lucide-react-native/dist/esm/icons/log-out.js";
+import ShieldCheck from "lucide-react-native/dist/esm/icons/shield-check.js";
+import UserRound from "lucide-react-native/dist/esm/icons/user-round.js";
 
 import { ActionButton } from "@/components/action-button";
 import { ScreenShell } from "@/components/screen-shell";
