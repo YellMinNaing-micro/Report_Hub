@@ -25,17 +25,17 @@ export default function TabLayout() {
         tabBarInactiveTintColor: colors.tabInactiveText,
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 74,
-          paddingTop: 10,
-          paddingBottom: 10,
+          height: 84,
+          paddingTop: 12,
+          paddingBottom: 14,
           backgroundColor: colors.tabBar,
           borderTopColor: colors.border,
           borderTopWidth: 1,
         },
         tabBarItemStyle: {
-          marginHorizontal: 8,
-          marginVertical: 4,
-          borderRadius: 20,
+          marginHorizontal: 6,
+          marginVertical: 6,
+          borderRadius: 22,
         },
       }}
     >
