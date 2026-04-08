@@ -4,9 +4,11 @@ import { House, UserRound } from "lucide-react-native/icons";
 
 import { AnimatedTabIcon } from "@/components/animated-tab-icon";
 import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
 
 export default function TabLayout() {
   const { isAuthenticated } = useAuth();
+  const { colors } = useTheme();
 
   if (!isAuthenticated) {
     return <Redirect href="/" />;
@@ -17,18 +19,18 @@ export default function TabLayout() {
       screenOptions={{
         headerTitleAlign: "center",
         headerShadowVisible: false,
-        headerStyle: { backgroundColor: "#eef2f7" },
-        sceneStyle: { backgroundColor: "#eef2f7" },
-        tabBarActiveTintColor: "#0f172a",
-        tabBarInactiveTintColor: "#64748b",
+        headerStyle: { backgroundColor: colors.background },
+        sceneStyle: { backgroundColor: colors.background },
+        tabBarActiveTintColor: colors.tabActive,
+        tabBarInactiveTintColor: colors.tabInactiveText,
         tabBarShowLabel: false,
         tabBarStyle: {
           height: 74,
           paddingTop: 10,
           paddingBottom: 10,
-          backgroundColor: "#eef2f7",
-          borderTopColor: "#dde5ee",
-          borderTopWidth: 0,
+          backgroundColor: colors.tabBar,
+          borderTopColor: colors.border,
+          borderTopWidth: 1,
         },
         tabBarItemStyle: {
           marginHorizontal: 8,
