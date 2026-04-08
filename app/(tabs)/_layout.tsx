@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, Tabs } from "expo-router";
-import { House, Settings2 } from "lucide-react-native/icons";
+import { FileText, House, Settings2 } from "lucide-react-native/icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AnimatedTabIcon } from "@/components/animated-tab-icon";
 import { useAuth } from "@/lib/auth-context";
@@ -9,6 +10,7 @@ import { useTheme } from "@/lib/theme-context";
 export default function TabLayout() {
   const { isAuthenticated } = useAuth();
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
 
   if (!isAuthenticated) {
     return <Redirect href="/" />;
@@ -23,25 +25,25 @@ export default function TabLayout() {
         tabBarInactiveTintColor: colors.tabInactiveText,
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 86,
-          paddingTop: 10,
-          paddingBottom: 14,
-          marginHorizontal: 14,
-          marginBottom: 12,
-          borderRadius: 26,
+          height: 62 + insets.bottom,
+          paddingTop: 6,
+          paddingBottom: Math.max(insets.bottom, 10),
+          marginHorizontal: 18,
+          marginBottom: Math.max(insets.bottom > 0 ? 6 : 10, 6),
+          borderRadius: 22,
           backgroundColor: colors.tabBar,
           borderTopWidth: 0,
           position: "absolute",
           shadowColor: colors.shadow,
-          shadowOpacity: 0.18,
-          shadowOffset: { width: 0, height: 10 },
-          shadowRadius: 24,
-          elevation: 8,
+          shadowOpacity: 0.16,
+          shadowOffset: { width: 0, height: 8 },
+          shadowRadius: 20,
+          elevation: 7,
         },
         tabBarItemStyle: {
-          marginHorizontal: 6,
-          marginVertical: 8,
-          borderRadius: 18,
+          marginHorizontal: 4,
+          marginVertical: 4,
+          borderRadius: 16,
         },
       }}
     >
@@ -55,6 +57,25 @@ export default function TabLayout() {
               label="Home"
               icon={
                 <House
+                  color={focused ? colors.primaryText : colors.tabInactiveText}
+                  size={size}
+                  strokeWidth={2.2}
+                />
+              }
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="history"
+        options={{
+          title: "History",
+          tabBarIcon: ({ size, focused }) => (
+            <AnimatedTabIcon
+              focused={focused}
+              label="History"
+              icon={
+                <FileText
                   color={focused ? colors.primaryText : colors.tabInactiveText}
                   size={size}
                   strokeWidth={2.2}
