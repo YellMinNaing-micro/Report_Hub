@@ -17,7 +17,7 @@ export function ScreenShell({ children }: PropsWithChildren) {
         contentContainerClassName="flex-grow px-4 py-8"
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
+        keyboardDismissMode="none"
       >
         <View
           className="absolute -left-10 top-6 h-32 w-32 rounded-full"
