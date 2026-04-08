@@ -15,22 +15,24 @@ export function NeumorphCard({
 }: NeumorphCardProps) {
   return (
     <View
-      className={`rounded-[28px] border border-white/70 bg-[#e8edf3] ${className}`}
+      className={`rounded-[24px] border bg-[#f3f6fa] ${className}`}
       style={[
         inset
           ? {
+              borderColor: "#e2e8f0",
               shadowColor: "#ffffff",
-              shadowOffset: { width: -6, height: -6 },
-              shadowOpacity: 0.95,
-              shadowRadius: 12,
-              elevation: 2,
+              shadowOffset: { width: -2, height: -2 },
+              shadowOpacity: 0.45,
+              shadowRadius: 6,
+              elevation: 1,
             }
           : {
-              shadowColor: "#94a3b8",
-              shadowOffset: { width: 10, height: 10 },
-              shadowOpacity: 0.2,
-              shadowRadius: 18,
-              elevation: 8,
+              borderColor: "#f8fafc",
+              shadowColor: "#64748b",
+              shadowOffset: { width: 0, height: 10 },
+              shadowOpacity: 0.08,
+              shadowRadius: 20,
+              elevation: 3,
             },
         style,
       ]}
