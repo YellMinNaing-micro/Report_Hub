@@ -15,6 +15,46 @@ const imageToDataUri = async (uri: string) => {
   return `data:${guessMimeType(uri)};base64,${base64}`;
 };
 
+const PDF_EXTENSION = ".pdf";
+
+const sanitizePdfFileName = (name: string) =>
+  name
+    .trim()
+    .replace(/\.pdf$/i, "")
+    .replace(/[<>:"/\\|?*\u0000-\u001F]/g, "")
+    .replace(/\s+/g, "-");
+
+export const getPdfFileName = (uri: string) => {
+  const segments = uri.split("/");
+  return segments[segments.length - 1] ?? "";
+};
+
+export async function renamePdfFile(uri: string, nextName: string) {
+  if (!FileSystem.documentDirectory) {
+    throw new Error("Document directory is unavailable on this device.");
+  }
+
+  const sanitizedName = sanitizePdfFileName(nextName);
+
+  if (!sanitizedName) {
+    throw new Error("Please enter a valid PDF file name.");
+  }
+
+  const nextUri = `${FileSystem.documentDirectory}${sanitizedName}${PDF_EXTENSION}`;
+
+  if (nextUri === uri) {
+    return uri;
+  }
+
+  const existingFile = await FileSystem.getInfoAsync(nextUri);
+  if (existingFile.exists) {
+    throw new Error("A PDF with that name already exists.");
+  }
+
+  await FileSystem.moveAsync({ from: uri, to: nextUri });
+  return nextUri;
+}
+
 export async function generatePdfFromImages(imageUris: string[]) {
   if (!imageUris.length) {
     throw new Error("At least one image is required.");
