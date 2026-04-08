@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Tabs } from "expo-router";
-import { House, UserRound } from "lucide-react-native/icons";
+import { House, Settings2 } from "lucide-react-native/icons";
 
 import { AnimatedTabIcon } from "@/components/animated-tab-icon";
 import { useAuth } from "@/lib/auth-context";
@@ -17,26 +17,30 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerTitleAlign: "center",
-        headerShadowVisible: false,
-        headerStyle: { backgroundColor: colors.background },
-        headerTintColor: colors.text,
-        headerTitleStyle: { color: colors.text },
+        headerShown: false,
         sceneStyle: { backgroundColor: colors.background },
         tabBarActiveTintColor: colors.tabActive,
         tabBarInactiveTintColor: colors.tabInactiveText,
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 78,
+          height: 86,
           paddingTop: 10,
-          paddingBottom: 12,
+          paddingBottom: 14,
+          marginHorizontal: 14,
+          marginBottom: 12,
+          borderRadius: 26,
           backgroundColor: colors.tabBar,
-          borderTopColor: colors.border,
-          borderTopWidth: 1,
+          borderTopWidth: 0,
+          position: "absolute",
+          shadowColor: colors.shadow,
+          shadowOpacity: 0.18,
+          shadowOffset: { width: 0, height: 10 },
+          shadowRadius: 24,
+          elevation: 8,
         },
         tabBarItemStyle: {
-          marginHorizontal: 10,
-          marginVertical: 6,
+          marginHorizontal: 6,
+          marginVertical: 8,
           borderRadius: 18,
         },
       }}
@@ -44,7 +48,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: "Report Hub",
+          title: "Home",
           tabBarIcon: ({ size, focused }) => (
             <AnimatedTabIcon
               focused={focused}
@@ -63,13 +67,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: "Settings",
           tabBarIcon: ({ size, focused }) => (
             <AnimatedTabIcon
               focused={focused}
-              label="Profile"
+              label="Settings"
               icon={
-                <UserRound
+                <Settings2
                   color={focused ? colors.primaryText : colors.tabInactiveText}
                   size={size}
                   strokeWidth={2.2}
