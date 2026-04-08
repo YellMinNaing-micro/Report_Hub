@@ -22,13 +22,13 @@ export default function ProfileScreen() {
     <ScreenShell>
       <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
         <NeumorphCard className="items-center px-6 py-8">
-          <NeumorphCard inset className="h-24 w-24 items-center justify-center rounded-full">
-            <UserRound color="#334155" size={44} strokeWidth={2.2} />
-          </NeumorphCard>
+          <View className="h-20 w-20 items-center justify-center rounded-2xl bg-slate-900">
+            <UserRound color="#ffffff" size={44} strokeWidth={2.2} />
+          </View>
           <Heading size="xl" className="mt-4 text-slate-900">
             Admin Profile
           </Heading>
-          <Text className="mt-2 text-center text-sm text-slate-600">
+          <Text className="mt-2 text-center text-sm leading-6 text-slate-600">
             Manage your Report Hub session and keep access under the default admin account.
           </Text>
         </NeumorphCard>
@@ -37,7 +37,7 @@ export default function ProfileScreen() {
           <View className="flex-row items-center gap-3">
             <NeumorphCard
               inset
-              className="h-12 w-12 items-center justify-center rounded-full bg-[#e6f2ea]"
+              className="h-12 w-12 items-center justify-center rounded-2xl bg-[#f7faf8]"
             >
               <ShieldCheck color="#047857" size={22} strokeWidth={2.2} />
             </NeumorphCard>
@@ -49,7 +49,7 @@ export default function ProfileScreen() {
             </View>
           </View>
 
-          <NeumorphCard inset className="mt-5 p-4">
+          <NeumorphCard inset className="mt-5 bg-white p-4">
             <Text className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               Account Access
             </Text>
@@ -64,7 +64,7 @@ export default function ProfileScreen() {
           <View className="flex-row items-center gap-3">
             <NeumorphCard
               inset
-              className="h-11 w-11 items-center justify-center rounded-full bg-[#f7e7eb]"
+              className="h-11 w-11 items-center justify-center rounded-2xl bg-[#fff5f6]"
             >
               <LogOut color="#be123c" size={20} strokeWidth={2.2} />
             </NeumorphCard>
