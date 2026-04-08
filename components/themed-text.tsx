@@ -5,7 +5,7 @@ import { useTheme } from "@/lib/theme-context";
 
 type AppTextProps = PropsWithChildren<
   TextProps & {
-    tone?: "default" | "muted" | "subtle" | "primary" | "success";
+    tone?: "default" | "muted" | "subtle" | "primary" | "success" | "danger";
     weight?: "medium" | "semibold" | "bold";
   }
 >;
@@ -26,6 +26,7 @@ export function AppText({
     subtle: colors.textSubtle,
     primary: colors.primary,
     success: colors.success,
+    danger: colors.danger,
   }[tone];
 
   const weightClassName =
