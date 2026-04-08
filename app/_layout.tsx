@@ -2,6 +2,7 @@ import "@/global.css";
 import React from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppGluestackProvider } from "@/lib/gluestack-provider";
 import { AuthProvider } from "@/lib/auth-context";
@@ -34,14 +35,16 @@ function AppNavigator() {
 
 export default function RootLayout() {
   return (
-    <AppGluestackProvider>
-      <ThemeProvider>
-        <AuthProvider>
-          <ImageSelectionProvider>
-            <AppNavigator />
-          </ImageSelectionProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </AppGluestackProvider>
+    <SafeAreaProvider>
+      <AppGluestackProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <ImageSelectionProvider>
+              <AppNavigator />
+            </ImageSelectionProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </AppGluestackProvider>
+    </SafeAreaProvider>
   );
 }
