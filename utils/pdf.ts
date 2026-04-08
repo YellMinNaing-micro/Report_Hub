@@ -17,7 +17,7 @@ const imageToDataUri = async (uri: string) => {
 
 const PDF_EXTENSION = ".pdf";
 
-const sanitizePdfFileName = (name: string) =>
+export const sanitizePdfFileName = (name: string) =>
   name
     .trim()
     .replace(/\.pdf$/i, "")
@@ -57,7 +57,7 @@ export async function renamePdfFile(uri: string, nextName: string) {
   return nextUri;
 }
 
-export async function generatePdfFromImages(imageUris: string[]) {
+export async function generatePdfFromImages(imageUris: string[], fileName?: string) {
   if (!imageUris.length) {
     throw new Error("At least one image is required.");
   }
@@ -88,7 +88,7 @@ export async function generatePdfFromImages(imageUris: string[]) {
             <p><strong>Image ${index + 1}</strong></p>
             <img src="${dataUri}" />
           </div>
-        `
+        `,
           )
           .join("")}
       </body>
@@ -96,7 +96,8 @@ export async function generatePdfFromImages(imageUris: string[]) {
   `;
 
   const printed = await Print.printToFileAsync({ html });
-  const outputUri = `${FileSystem.documentDirectory}report-${Date.now()}.pdf`;
+  const safeName = sanitizePdfFileName(fileName ?? "") || `report-${Date.now()}`;
+  const outputUri = `${FileSystem.documentDirectory}${safeName}.pdf`;
   await FileSystem.copyAsync({ from: printed.uri, to: outputUri });
 
   return outputUri;
