@@ -1,0 +1,10 @@
+diff --git a/node_modules/@gluestack-ui/config/src/components/safe-area-view/index.tsx b/node_modules/@gluestack-ui/config/src/components/safe-area-view/index.tsx
+index 34e9630..28e7a1a 100644
+--- a/node_modules/@gluestack-ui/config/src/components/safe-area-view/index.tsx
++++ b/node_modules/@gluestack-ui/config/src/components/safe-area-view/index.tsx
+@@ -1,4 +1,4 @@
+-import { SafeAreaView as RNSafeAreaView } from 'react-native';
++import { SafeAreaView as RNSafeAreaView } from 'react-native-safe-area-context';
+ 
+ import { styled } from '@gluestack-style/react';
+ 
