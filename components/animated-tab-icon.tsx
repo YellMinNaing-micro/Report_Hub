@@ -43,7 +43,7 @@ export function AnimatedTabIcon({ icon, label, focused }: AnimatedTabIconProps) 
   return (
     <Animated.View
       style={containerStyle}
-      className="min-w-[92px] items-center justify-center rounded-[18px] px-4 py-3"
+      className="min-w-[78px] items-center justify-center rounded-[16px] px-3 py-2"
     >
       <View>{icon}</View>
       <Animated.View style={labelStyle}>
