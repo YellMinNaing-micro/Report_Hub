@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+
 import { useTheme } from "@/lib/theme-context";
 
 type AnimatedTabIconProps = {
@@ -24,32 +25,30 @@ export function AnimatedTabIcon({ icon, label, focused }: AnimatedTabIconProps) 
 
   const containerStyle = useAnimatedStyle(() => ({
     backgroundColor: focused ? colors.tabActive : "transparent",
-    borderColor: focused ? colors.tabActive : "transparent",
-    borderWidth: 1,
     shadowColor: colors.shadow,
-    shadowOpacity: interpolate(progress.value, [0, 1], [0, isDark ? 0.22 : 0.12]),
-    shadowRadius: interpolate(progress.value, [0, 1], [0, 12]),
-    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: interpolate(progress.value, [0, 1], [0, isDark ? 0.24 : 0.12]),
+    shadowRadius: interpolate(progress.value, [0, 1], [0, 16]),
+    shadowOffset: { width: 0, height: 10 },
     transform: [
       { translateY: interpolate(progress.value, [0, 1], [0, -2]) },
-      { scale: interpolate(progress.value, [0, 1], [1, 1.02]) },
+      { scale: interpolate(progress.value, [0, 1], [1, 1.03]) },
     ],
   }));
 
   const labelStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(progress.value, [0, 1], [0.72, 1]),
-    transform: [{ translateX: interpolate(progress.value, [0, 1], [0, 1]) }],
+    opacity: interpolate(progress.value, [0, 1], [0.68, 1]),
+    transform: [{ translateY: interpolate(progress.value, [0, 1], [0, 1]) }],
   }));
 
   return (
     <Animated.View
       style={containerStyle}
-      className="min-w-[112px] flex-row items-center justify-center gap-2 rounded-full px-4 py-3"
+      className="min-w-[92px] items-center justify-center rounded-[18px] px-4 py-3"
     >
       <View>{icon}</View>
       <Animated.View style={labelStyle}>
         <Text
-          className={focused ? "text-xs font-bold" : "text-xs font-semibold"}
+          className={focused ? "mt-1 text-[11px] font-bold" : "mt-1 text-[11px] font-semibold"}
           style={{ color: focused ? colors.primaryText : colors.tabInactiveText }}
         >
           {label}
