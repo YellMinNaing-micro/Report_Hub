@@ -29,6 +29,8 @@ export const getPdfFileName = (uri: string) => {
   return segments[segments.length - 1] ?? "";
 };
 
+export const getPdfBaseName = (uri: string) => getPdfFileName(uri).replace(/\.pdf$/i, "");
+
 export async function renamePdfFile(uri: string, nextName: string) {
   if (!FileSystem.documentDirectory) {
     throw new Error("Document directory is unavailable on this device.");
