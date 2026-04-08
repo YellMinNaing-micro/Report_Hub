@@ -1,8 +1,7 @@
 import React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { router } from "expo-router";
-import { Heading } from "@gluestack-ui/themed";
-import { LogOut, ShieldCheck, UserRound } from "lucide-react-native/icons";
+import { ChevronLeft, LogOut, MoonStar, Settings2, SunMedium } from "lucide-react-native/icons";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { ActionButton } from "@/components/action-button";
@@ -11,7 +10,6 @@ import { ScreenShell } from "@/components/screen-shell";
 import { AppText } from "@/components/themed-text";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
-import { MoonStar, SunMedium } from "lucide-react-native/icons";
 
 export default function ProfileScreen() {
   const { logout } = useAuth();
@@ -24,53 +22,58 @@ export default function ProfileScreen() {
 
   return (
     <ScreenShell>
-      <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
-        <NeumorphCard className="items-center px-6 py-8">
-          <View
-            className="h-20 w-20 items-center justify-center rounded-2xl"
-            style={{ backgroundColor: colors.primary }}
+      <Animated.View entering={FadeInDown.duration(260)} className="gap-5 pb-24">
+        <View className="flex-row items-center justify-between">
+          <Pressable
+            onPress={() => router.back()}
+            className="h-12 w-12 items-center justify-center rounded-full border"
+            style={{ backgroundColor: colors.surface, borderColor: colors.border }}
           >
-            <UserRound color="#ffffff" size={44} strokeWidth={2.2} />
-          </View>
-          <Heading size="xl" className="mt-4" style={{ color: colors.text }}>
-            Admin Profile
-          </Heading>
-          <AppText className="mt-2 text-center text-sm leading-6" tone="muted">
-            Manage your Report Hub session and keep access under the default admin account.
+            <ChevronLeft color={colors.text} size={22} strokeWidth={2.1} />
+          </Pressable>
+          <AppText className="text-[32px] leading-9" weight="bold">
+            Settings
           </AppText>
-        </NeumorphCard>
+          <View className="w-12" />
+        </View>
 
-        <NeumorphCard className="p-5">
+        <NeumorphCard className="rounded-[28px] p-6">
           <View className="flex-row items-center gap-3">
             <NeumorphCard
               inset
-              className="h-12 w-12 items-center justify-center rounded-2xl"
-              style={{ backgroundColor: colors.successSoft }}
+              className="h-14 w-14 items-center justify-center rounded-2xl"
+              style={{ backgroundColor: colors.primarySoft }}
             >
-              <ShieldCheck color={colors.success} size={22} strokeWidth={2.2} />
+              <Settings2 color={colors.primary} size={24} strokeWidth={2.2} />
             </NeumorphCard>
             <View className="flex-1">
-              <AppText className="text-xs uppercase tracking-wide" tone="subtle" weight="semibold">
-                Signed In As
+              <AppText className="text-xs uppercase tracking-wide" tone="primary" weight="semibold">
+                Session
               </AppText>
-              <AppText className="mt-1 text-lg" weight="semibold">admin</AppText>
+              <AppText className="mt-1 text-2xl" weight="bold">
+                Admin
+              </AppText>
             </View>
           </View>
 
-          <NeumorphCard inset className="mt-5 p-4">
+          <NeumorphCard inset className="mt-5 rounded-[22px] p-4">
             <AppText className="text-xs uppercase tracking-wide" tone="subtle" weight="semibold">
               Account Access
             </AppText>
             <AppText className="mt-2 text-sm leading-6" tone="muted">
-              This profile uses the default local credentials for the app. Use the logout button
-              below whenever you want to lock the session and return to the login screen.
+              Manage your local Report Hub session here. You can switch theme appearance or sign
+              out whenever needed.
             </AppText>
           </NeumorphCard>
         </NeumorphCard>
 
-        <NeumorphCard className="p-5">
+        <NeumorphCard className="rounded-[24px] p-5">
           <View className="flex-row items-center gap-3">
-            <NeumorphCard inset className="h-11 w-11 items-center justify-center rounded-2xl">
+            <NeumorphCard
+              inset
+              className="h-12 w-12 items-center justify-center rounded-2xl"
+              style={{ backgroundColor: colors.primarySoft }}
+            >
               {isDark ? (
                 <MoonStar color={colors.primary} size={20} strokeWidth={2.2} />
               ) : (
@@ -82,33 +85,35 @@ export default function ProfileScreen() {
                 Theme
               </AppText>
               <AppText className="mt-1 text-sm" tone="muted">
-                Switch between light and dark appearance.
+                Switch between dark and light theme styles.
               </AppText>
             </View>
           </View>
 
           <View className="mt-5">
             <ActionButton
-              title={isDark ? "Switch To Light Mode" : "Switch To Dark Mode"}
+              title={isDark ? "Switch To Light Theme" : "Switch To Dark Theme"}
               onPress={toggleTheme}
               variant="outline"
             />
           </View>
         </NeumorphCard>
 
-        <NeumorphCard className="p-5">
+        <NeumorphCard className="rounded-[24px] p-5">
           <View className="flex-row items-center gap-3">
             <NeumorphCard
               inset
-              className="h-11 w-11 items-center justify-center rounded-2xl"
+              className="h-12 w-12 items-center justify-center rounded-2xl"
               style={{ backgroundColor: colors.dangerSoft }}
             >
               <LogOut color={colors.danger} size={20} strokeWidth={2.2} />
             </NeumorphCard>
             <View className="flex-1">
-              <AppText className="text-base" weight="semibold">End Session</AppText>
+              <AppText className="text-base" weight="semibold">
+                End Session
+              </AppText>
               <AppText className="mt-1 text-sm" tone="muted">
-                Sign out and go back to the login page.
+                Sign out and return to the login screen.
               </AppText>
             </View>
           </View>
