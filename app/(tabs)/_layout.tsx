@@ -17,23 +17,23 @@ export default function TabLayout() {
       screenOptions={{
         headerTitleAlign: "center",
         headerShadowVisible: false,
-        headerStyle: { backgroundColor: "#f8fafc" },
-        sceneStyle: { backgroundColor: "#f8fafc" },
-        tabBarActiveTintColor: "#2563eb",
+        headerStyle: { backgroundColor: "#eef2f7" },
+        sceneStyle: { backgroundColor: "#eef2f7" },
+        tabBarActiveTintColor: "#0f172a",
         tabBarInactiveTintColor: "#64748b",
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 78,
+          height: 74,
           paddingTop: 10,
-          paddingBottom: 14,
-          backgroundColor: "#ffffff",
-          borderTopColor: "#e2e8f0",
-          borderTopWidth: 1,
+          paddingBottom: 10,
+          backgroundColor: "#eef2f7",
+          borderTopColor: "#dde5ee",
+          borderTopWidth: 0,
         },
         tabBarItemStyle: {
-          marginHorizontal: 6,
-          marginVertical: 6,
-          borderRadius: 24,
+          marginHorizontal: 8,
+          marginVertical: 4,
+          borderRadius: 20,
         },
       }}
     >
@@ -44,7 +44,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size, focused }) => (
             <AnimatedTabIcon
               focused={focused}
-              label=""
+              label="Home"
               icon={<House color={color} size={size} strokeWidth={2.2} />}
             />
           ),
@@ -57,7 +57,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size, focused }) => (
             <AnimatedTabIcon
               focused={focused}
-              label=""
+              label="Profile"
               icon={<UserRound color={color} size={size} strokeWidth={2.2} />}
             />
           ),
