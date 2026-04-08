@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { router } from "expo-router";
 import { Box, Heading } from "@gluestack-ui/themed";
 import { LogOut, ShieldCheck, UserRound } from "lucide-react-native/icons";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { ActionButton } from "@/components/action-button";
 import { ScreenShell } from "@/components/screen-shell";
@@ -18,7 +19,7 @@ export default function ProfileScreen() {
 
   return (
     <ScreenShell>
-      <View className="gap-4">
+      <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
         <Box className="items-center rounded-[32px] bg-slate-200 px-6 py-8 shadow-sm">
           <View className="h-24 w-24 items-center justify-center rounded-full bg-slate-300">
             <UserRound color="#334155" size={44} strokeWidth={2.2} />
@@ -77,7 +78,7 @@ export default function ProfileScreen() {
             />
           </View>
         </Box>
-      </View>
+      </Animated.View>
     </ScreenShell>
   );
 }
