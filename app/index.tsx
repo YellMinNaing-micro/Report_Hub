@@ -7,9 +7,11 @@ import { ScreenShell } from "@/components/screen-shell";
 import { ActionButton } from "@/components/action-button";
 import { NeumorphCard } from "@/components/neumorph-card";
 import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
 
 export default function LoginScreen() {
   const { isAuthenticated, login } = useAuth();
+  const { colors } = useTheme();
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("Password@123");
 
@@ -33,43 +35,52 @@ export default function LoginScreen() {
       <View className="min-h-full justify-center py-10">
         <NeumorphCard className="p-7">
           <View className="items-center">
-            <View className="h-16 w-16 items-center justify-center rounded-2xl bg-blue-600">
+            <View
+              className="h-16 w-16 items-center justify-center rounded-2xl"
+              style={{ backgroundColor: colors.primary }}
+            >
               <Text className="text-2xl font-bold text-white">RH</Text>
             </View>
 
-            <Heading size="xl" className="mt-5 text-center text-slate-900">
+            <Heading size="xl" className="mt-5 text-center" style={{ color: colors.text }}>
               Report Hub Login
             </Heading>
-            <Text className="mt-2 text-center text-sm leading-6 text-slate-600">
+            <Text className="mt-2 text-center text-sm leading-6" style={{ color: colors.textMuted }}>
               Sign in to manage images, create polished PDF reports, and keep your work organized.
             </Text>
           </View>
 
           <View className="mt-7 gap-4">
             <View>
-              <Text className="mb-2 text-sm font-medium text-slate-700">Username</Text>
-              <NeumorphCard inset className="rounded-[18px] bg-white px-4 py-1">
+              <Text className="mb-2 text-sm font-medium" style={{ color: colors.textMuted }}>
+                Username
+              </Text>
+              <NeumorphCard inset className="rounded-[18px] px-4 py-1">
                 <TextInput
                   value={username}
                   onChangeText={setUsername}
                   autoCapitalize="none"
                   placeholder="Enter username"
-                  placeholderTextColor="#94a3b8"
-                  className="px-1 py-3 text-slate-900"
+                  placeholderTextColor={colors.textSubtle}
+                  className="px-1 py-3"
+                  style={{ color: colors.text }}
                 />
               </NeumorphCard>
             </View>
 
             <View>
-              <Text className="mb-2 text-sm font-medium text-slate-700">Password</Text>
-              <NeumorphCard inset className="rounded-[18px] bg-white px-4 py-1">
+              <Text className="mb-2 text-sm font-medium" style={{ color: colors.textMuted }}>
+                Password
+              </Text>
+              <NeumorphCard inset className="rounded-[18px] px-4 py-1">
                 <TextInput
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry
                   placeholder="Enter password"
-                  placeholderTextColor="#94a3b8"
-                  className="px-1 py-3 text-slate-900"
+                  placeholderTextColor={colors.textSubtle}
+                  className="px-1 py-3"
+                  style={{ color: colors.text }}
                 />
               </NeumorphCard>
             </View>
