@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Alert, Text, TextInput, View } from "react-native";
+import { Alert, View } from "react-native";
 import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import * as Sharing from "expo-sharing";
@@ -7,9 +7,11 @@ import { Heading } from "@gluestack-ui/themed";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { ActionButton } from "@/components/action-button";
+import { FormField } from "@/components/form-field";
 import { ImagePreviewGrid } from "@/components/image-preview-grid";
 import { NeumorphCard } from "@/components/neumorph-card";
 import { ScreenShell } from "@/components/screen-shell";
+import { AppText } from "@/components/themed-text";
 import { useImageSelection } from "@/lib/image-selection-context";
 import { useTheme } from "@/lib/theme-context";
 import { generatePdfFromImages, getPdfBaseName, getPdfFileName, renamePdfFile } from "@/utils/pdf";
@@ -108,15 +110,15 @@ export default function HomeScreen() {
     <ScreenShell>
       <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
         <NeumorphCard className="p-5">
-          <Text className="text-xs font-semibold uppercase tracking-[1.4px]" style={{ color: colors.primary }}>
+          <AppText className="text-xs uppercase tracking-[1.4px]" tone="primary" weight="semibold">
             Report Builder
-          </Text>
+          </AppText>
           <Heading size="lg" className="mt-2" style={{ color: colors.text }}>
             Image To PDF Report
           </Heading>
-          <Text className="mt-2 text-sm leading-6" style={{ color: colors.textMuted }}>
+          <AppText className="mt-2 text-sm leading-6" tone="muted">
             Choose photos from gallery or camera, then generate a single PDF report in seconds.
-          </Text>
+          </AppText>
         </NeumorphCard>
 
         <View className="gap-3">
@@ -125,9 +127,9 @@ export default function HomeScreen() {
         </View>
 
         <NeumorphCard className="p-4">
-          <Text className="mb-3 text-base font-semibold" style={{ color: colors.text }}>
+          <AppText className="mb-3 text-base" weight="semibold">
             Selected Images ({images.length})
-          </Text>
+          </AppText>
           <ImagePreviewGrid images={images} onRemove={removeImage} />
         </NeumorphCard>
 
@@ -151,29 +153,20 @@ export default function HomeScreen() {
 
         {pdfUri ? (
           <NeumorphCard className="p-3" style={{ backgroundColor: colors.successSoft }}>
-            <Text className="text-xs font-medium" style={{ color: colors.success }}>Saved PDF</Text>
-            <Text className="mt-3 text-xs font-medium" style={{ color: colors.success }}>
-              File Name
-            </Text>
-            <NeumorphCard inset className="mt-2 rounded-[18px] px-4 py-1">
-              <View className="flex-row items-center">
-                <TextInput
-                  value={pdfFileName}
-                  onChangeText={setPdfFileName}
-                  autoCapitalize="none"
-                  placeholder="report"
-                  placeholderTextColor={colors.textSubtle}
-                  className="flex-1 px-1 py-3"
-                  style={{ color: colors.text }}
-                />
-                <Text className="pl-2 text-sm font-medium" style={{ color: colors.textMuted }}>
-                  .pdf
-                </Text>
-              </View>
-            </NeumorphCard>
-            <Text selectable className="mt-1 text-xs" style={{ color: colors.success }}>
+            <AppText className="text-xs" tone="success" weight="medium">Saved PDF</AppText>
+            <View className="mt-3">
+              <FormField
+                label="File Name"
+                value={pdfFileName}
+                onChangeText={setPdfFileName}
+                autoCapitalize="none"
+                placeholder="report"
+                suffix=".pdf"
+              />
+            </View>
+            <AppText selectable className="mt-1 text-xs" tone="success">
               {pdfUri}
-            </Text>
+            </AppText>
           </NeumorphCard>
         ) : null}
       </Animated.View>
