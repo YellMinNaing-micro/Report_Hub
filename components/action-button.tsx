@@ -7,6 +7,7 @@ type ActionButtonProps = {
   disabled?: boolean;
   loading?: boolean;
   variant?: "solid" | "outline";
+  action?: "primary" | "secondary" | "negative";
 };
 
 export function ActionButton({
@@ -15,13 +16,14 @@ export function ActionButton({
   disabled = false,
   loading = false,
   variant = "solid",
+  action,
 }: ActionButtonProps) {
   return (
     <Button
       onPress={onPress}
       size="lg"
       variant={variant}
-      action={variant === "solid" ? "primary" : "secondary"}
+      action={action ?? (variant === "solid" ? "primary" : "secondary")}
       isDisabled={disabled || loading}
       className="rounded-full"
     >
