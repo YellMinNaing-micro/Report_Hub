@@ -82,12 +82,14 @@ export default function HomeScreen() {
     <ScreenShell>
       <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
         <NeumorphCard className="p-5">
-          <Heading size="lg" className="text-slate-900">
+          <Text className="text-xs font-semibold uppercase tracking-[1.4px] text-blue-600">
+            Report Builder
+          </Text>
+          <Heading size="lg" className="mt-2 text-slate-900">
             Image To PDF Report
           </Heading>
-          <Text className="mt-2 text-sm text-slate-600">
-            Choose multiple gallery photos or capture one-by-one with camera, then generate one
-            PDF file.
+          <Text className="mt-2 text-sm leading-6 text-slate-600">
+            Choose photos from gallery or camera, then generate a single PDF report in seconds.
           </Text>
         </NeumorphCard>
 
@@ -115,7 +117,7 @@ export default function HomeScreen() {
         </View>
 
         {pdfUri ? (
-          <NeumorphCard className="border-emerald-100 bg-[#e7efe8] p-3">
+          <NeumorphCard className="bg-[#edf7f0] p-3">
             <Text className="text-xs font-medium text-emerald-800">Saved PDF</Text>
             <Text selectable className="mt-1 text-xs text-emerald-700">
               {pdfUri}
