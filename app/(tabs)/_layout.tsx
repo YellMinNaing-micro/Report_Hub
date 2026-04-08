@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect, Tabs } from "expo-router";
-import House from "lucide-react-native/dist/esm/icons/house.js";
-import UserRound from "lucide-react-native/dist/esm/icons/user-round.js";
+import { House, UserRound } from "lucide-react-native/icons";
 
 import { useAuth } from "@/lib/auth-context";
 
