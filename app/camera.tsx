@@ -6,9 +6,11 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import { ActionButton } from "@/components/action-button";
 import { useAuth } from "@/lib/auth-context";
 import { useImageSelection } from "@/lib/image-selection-context";
+import { useTheme } from "@/lib/theme-context";
 
 export default function CameraScreen() {
   const { isAuthenticated } = useAuth();
+  const { colors, isDark } = useTheme();
   const cameraRef = useRef<CameraView | null>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [isCapturing, setIsCapturing] = useState(false);
@@ -43,7 +45,7 @@ export default function CameraScreen() {
 
   if (!permission) {
     return (
-      <View className="flex-1 items-center justify-center bg-slate-950 px-6">
+      <View className="flex-1 items-center justify-center px-6" style={{ backgroundColor: colors.backgroundSecondary }}>
         <Text className="text-center text-white">Checking camera permission...</Text>
       </View>
     );
@@ -51,8 +53,8 @@ export default function CameraScreen() {
 
   if (!permission.granted) {
     return (
-      <View className="flex-1 items-center justify-center bg-slate-950 px-6">
-        <Text className="mb-4 text-center text-white">
+      <View className="flex-1 items-center justify-center px-6" style={{ backgroundColor: colors.backgroundSecondary }}>
+        <Text className="mb-4 text-center" style={{ color: colors.text }}>
           Camera access is needed to capture report images.
         </Text>
         <View className="w-full max-w-xs">
@@ -93,9 +95,10 @@ export default function CameraScreen() {
 
           <TouchableOpacity
             onPress={() => router.back()}
-            className="h-12 items-center justify-center rounded-2xl bg-brand-500"
+            className="h-12 items-center justify-center rounded-2xl"
+            style={{ backgroundColor: colors.primary }}
           >
-            <Text className="text-sm font-semibold text-white">Done</Text>
+            <Text className="text-sm font-semibold" style={{ color: colors.primaryText }}>Done</Text>
           </TouchableOpacity>
         </View>
       </View>
