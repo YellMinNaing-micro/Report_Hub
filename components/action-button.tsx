@@ -1,5 +1,6 @@
 import React from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import { useTheme } from "@/lib/theme-context";
 
 type ActionButtonProps = {
   title: string;
@@ -18,6 +19,7 @@ export function ActionButton({
   variant = "solid",
   action,
 }: ActionButtonProps) {
+  const { colors, isDark } = useTheme();
   const resolvedAction = action ?? (variant === "solid" ? "primary" : "secondary");
   const isNegative = resolvedAction === "negative";
   const isOutline = variant === "outline";
@@ -33,39 +35,28 @@ export function ActionButton({
       })}
     >
       <View
-        className={`min-h-14 flex-row items-center justify-center rounded-full border px-6 py-4 ${
-          isOutline
-            ? isNegative
-              ? "border-rose-300 bg-white"
-              : "border-slate-200 bg-white"
-            : isNegative
-              ? "border-rose-500 bg-rose-500"
-              : "border-blue-600 bg-blue-600"
-        }`}
+        className="min-h-14 flex-row items-center justify-center rounded-full border px-6 py-4"
         style={{
-          shadowColor: "#64748b",
+          backgroundColor: isOutline ? colors.surfaceInset : isNegative ? colors.danger : colors.primary,
+          borderColor: isOutline ? (isNegative ? colors.danger : colors.border) : isNegative ? colors.danger : colors.primary,
+          shadowColor: colors.shadow,
           shadowOffset: { width: 0, height: 8 },
-          shadowOpacity: isOutline ? 0.05 : 0.16,
+          shadowOpacity: isOutline ? (isDark ? 0.12 : 0.05) : isDark ? 0.22 : 0.16,
           shadowRadius: 16,
           elevation: isOutline ? 1 : 4,
         }}
       >
         {loading ? (
           <ActivityIndicator
-            color={isNegative ? "#e11d48" : isOutline ? "#475569" : "#ffffff"}
+            color={isNegative ? (isOutline ? colors.danger : "#ffffff") : isOutline ? colors.textMuted : colors.primaryText}
             style={{ marginRight: 8 }}
           />
         ) : null}
         <Text
-          className={`text-base font-semibold ${
-            isOutline
-              ? isNegative
-                ? "text-rose-600"
-                : "text-slate-700"
-              : isNegative
-                ? "text-white"
-                : "text-white"
-          }`}
+          className="text-base font-semibold"
+          style={{
+            color: isOutline ? (isNegative ? colors.danger : colors.textMuted) : colors.primaryText,
+          }}
         >
           {title}
         </Text>
