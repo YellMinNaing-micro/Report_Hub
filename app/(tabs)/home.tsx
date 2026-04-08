@@ -12,7 +12,7 @@ import { NeumorphCard } from "@/components/neumorph-card";
 import { ScreenShell } from "@/components/screen-shell";
 import { useImageSelection } from "@/lib/image-selection-context";
 import { useTheme } from "@/lib/theme-context";
-import { generatePdfFromImages, getPdfFileName, renamePdfFile } from "@/utils/pdf";
+import { generatePdfFromImages, getPdfBaseName, getPdfFileName, renamePdfFile } from "@/utils/pdf";
 
 export default function HomeScreen() {
   const { colors } = useTheme();
@@ -55,7 +55,7 @@ export default function HomeScreen() {
       setIsGeneratingPdf(true);
       const newPdfUri = await generatePdfFromImages(imageUris);
       setPdfUri(newPdfUri);
-      setPdfFileName(getPdfFileName(newPdfUri));
+      setPdfFileName(getPdfBaseName(newPdfUri));
       Alert.alert("PDF Ready", `Saved locally:\n${newPdfUri}`);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to create PDF.";
@@ -94,7 +94,7 @@ export default function HomeScreen() {
       setIsRenamingPdf(true);
       const renamedPdfUri = await renamePdfFile(pdfUri, pdfFileName);
       setPdfUri(renamedPdfUri);
-      setPdfFileName(getPdfFileName(renamedPdfUri));
+      setPdfFileName(getPdfBaseName(renamedPdfUri));
       Alert.alert("PDF Renamed", `Saved as:\n${getPdfFileName(renamedPdfUri)}`);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to rename PDF.";
@@ -156,15 +156,20 @@ export default function HomeScreen() {
               File Name
             </Text>
             <NeumorphCard inset className="mt-2 rounded-[18px] px-4 py-1">
-              <TextInput
-                value={pdfFileName}
-                onChangeText={setPdfFileName}
-                autoCapitalize="none"
-                placeholder="report.pdf"
-                placeholderTextColor={colors.textSubtle}
-                className="px-1 py-3"
-                style={{ color: colors.text }}
-              />
+              <View className="flex-row items-center">
+                <TextInput
+                  value={pdfFileName}
+                  onChangeText={setPdfFileName}
+                  autoCapitalize="none"
+                  placeholder="report"
+                  placeholderTextColor={colors.textSubtle}
+                  className="flex-1 px-1 py-3"
+                  style={{ color: colors.text }}
+                />
+                <Text className="pl-2 text-sm font-medium" style={{ color: colors.textMuted }}>
+                  .pdf
+                </Text>
+              </View>
             </NeumorphCard>
             <Text selectable className="mt-1 text-xs" style={{ color: colors.success }}>
               {pdfUri}
