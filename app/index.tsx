@@ -13,7 +13,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("Password@123");
 
   if (isAuthenticated) {
-    return <Redirect href="/home" />;
+    return <Redirect href="/(tabs)/home" />;
   }
 
   const handleLogin = () => {
@@ -24,7 +24,7 @@ export default function LoginScreen() {
       return;
     }
 
-    router.replace("/home");
+    router.replace("/(tabs)/home");
   };
 
   return (
