@@ -23,7 +23,7 @@ export function ActionButton({
       variant={variant}
       action={variant === "solid" ? "primary" : "secondary"}
       isDisabled={disabled || loading}
-      className="rounded-2xl"
+      className="rounded-full"
     >
       {loading ? <ButtonSpinner mr="$2" /> : null}
       <ButtonText>{title}</ButtonText>
