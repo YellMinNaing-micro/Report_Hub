@@ -11,9 +11,11 @@ import { ImagePreviewGrid } from "@/components/image-preview-grid";
 import { NeumorphCard } from "@/components/neumorph-card";
 import { ScreenShell } from "@/components/screen-shell";
 import { useImageSelection } from "@/lib/image-selection-context";
+import { useTheme } from "@/lib/theme-context";
 import { generatePdfFromImages } from "@/utils/pdf";
 
 export default function HomeScreen() {
+  const { colors } = useTheme();
   const { images, addImages, clearImages, removeImage } = useImageSelection();
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [pdfUri, setPdfUri] = useState<string | null>(null);
@@ -82,13 +84,13 @@ export default function HomeScreen() {
     <ScreenShell>
       <Animated.View entering={FadeInDown.duration(260)} className="gap-4">
         <NeumorphCard className="p-5">
-          <Text className="text-xs font-semibold uppercase tracking-[1.4px] text-blue-600">
+          <Text className="text-xs font-semibold uppercase tracking-[1.4px]" style={{ color: colors.primary }}>
             Report Builder
           </Text>
-          <Heading size="lg" className="mt-2 text-slate-900">
+          <Heading size="lg" className="mt-2" style={{ color: colors.text }}>
             Image To PDF Report
           </Heading>
-          <Text className="mt-2 text-sm leading-6 text-slate-600">
+          <Text className="mt-2 text-sm leading-6" style={{ color: colors.textMuted }}>
             Choose photos from gallery or camera, then generate a single PDF report in seconds.
           </Text>
         </NeumorphCard>
@@ -99,7 +101,7 @@ export default function HomeScreen() {
         </View>
 
         <NeumorphCard className="p-4">
-          <Text className="mb-3 text-base font-semibold text-slate-900">
+          <Text className="mb-3 text-base font-semibold" style={{ color: colors.text }}>
             Selected Images ({images.length})
           </Text>
           <ImagePreviewGrid images={images} onRemove={removeImage} />
@@ -117,9 +119,9 @@ export default function HomeScreen() {
         </View>
 
         {pdfUri ? (
-          <NeumorphCard className="bg-[#edf7f0] p-3">
-            <Text className="text-xs font-medium text-emerald-800">Saved PDF</Text>
-            <Text selectable className="mt-1 text-xs text-emerald-700">
+          <NeumorphCard className="p-3" style={{ backgroundColor: colors.successSoft }}>
+            <Text className="text-xs font-medium" style={{ color: colors.success }}>Saved PDF</Text>
+            <Text selectable className="mt-1 text-xs" style={{ color: colors.success }}>
               {pdfUri}
             </Text>
           </NeumorphCard>
