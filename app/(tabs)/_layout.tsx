@@ -44,7 +44,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size, focused }) => (
             <AnimatedTabIcon
               focused={focused}
-              label="Home"
+              label=""
               icon={<House color={color} size={size} strokeWidth={2.2} />}
             />
           ),
@@ -57,7 +57,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size, focused }) => (
             <AnimatedTabIcon
               focused={focused}
-              label="Profile"
+              label=""
               icon={<UserRound color={color} size={size} strokeWidth={2.2} />}
             />
           ),
