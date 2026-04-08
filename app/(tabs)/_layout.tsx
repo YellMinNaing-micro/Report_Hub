@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { Redirect, Tabs } from "expo-router";
 import { House, UserRound } from "lucide-react-native/icons";
 
@@ -18,7 +19,7 @@ export default function TabLayout() {
         headerShadowVisible: false,
         headerStyle: { backgroundColor: "#f8fafc" },
         sceneStyle: { backgroundColor: "#f8fafc" },
-        tabBarActiveTintColor: "#0f172a",
+        tabBarActiveTintColor: "#2563eb",
         tabBarInactiveTintColor: "#64748b",
         tabBarLabelStyle: {
           fontSize: 12,
@@ -31,6 +32,11 @@ export default function TabLayout() {
           backgroundColor: "#ffffff",
           borderTopColor: "#e2e8f0",
         },
+        tabBarItemStyle: {
+          marginHorizontal: 8,
+          marginVertical: 6,
+          borderRadius: 18,
+        },
       }}
     >
       <Tabs.Screen
@@ -38,7 +44,13 @@ export default function TabLayout() {
         options={{
           title: "Report Hub",
           tabBarLabel: "Home",
-          tabBarIcon: ({ color, size }) => <House color={color} size={size} strokeWidth={2.2} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View
+              className={focused ? "rounded-full bg-blue-100 px-4 py-2" : "rounded-full px-4 py-2"}
+            >
+              <House color={color} size={size} strokeWidth={2.2} />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
@@ -46,8 +58,12 @@ export default function TabLayout() {
         options={{
           title: "Profile",
           tabBarLabel: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <UserRound color={color} size={size} strokeWidth={2.2} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <View
+              className={focused ? "rounded-full bg-blue-100 px-4 py-2" : "rounded-full px-4 py-2"}
+            >
+              <UserRound color={color} size={size} strokeWidth={2.2} />
+            </View>
           ),
         }}
       />
