@@ -45,11 +45,17 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "Report Hub",
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ size, focused }) => (
             <AnimatedTabIcon
               focused={focused}
               label="Home"
-              icon={<House color={color} size={size} strokeWidth={2.2} />}
+              icon={
+                <House
+                  color={focused ? colors.primaryText : colors.tabInactiveText}
+                  size={size}
+                  strokeWidth={2.2}
+                />
+              }
             />
           ),
         }}
@@ -58,11 +64,17 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ size, focused }) => (
             <AnimatedTabIcon
               focused={focused}
               label="Profile"
-              icon={<UserRound color={color} size={size} strokeWidth={2.2} />}
+              icon={
+                <UserRound
+                  color={focused ? colors.primaryText : colors.tabInactiveText}
+                  size={size}
+                  strokeWidth={2.2}
+                />
+              }
             />
           ),
         }}
