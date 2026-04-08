@@ -1,17 +1,23 @@
 import React, { useRef, useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { CameraView, useCameraPermissions } from "expo-camera";
 
 import { ActionButton } from "@/components/action-button";
+import { useAuth } from "@/lib/auth-context";
 import { useImageSelection } from "@/lib/image-selection-context";
 
 export default function CameraScreen() {
+  const { isAuthenticated } = useAuth();
   const cameraRef = useRef<CameraView | null>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [isCapturing, setIsCapturing] = useState(false);
   const [facing, setFacing] = useState<"back" | "front">("back");
   const { addImages, images } = useImageSelection();
+
+  if (!isAuthenticated) {
+    return <Redirect href="/" />;
+  }
 
   const toggleFacing = () => {
     setFacing((current) => (current === "back" ? "front" : "back"));
