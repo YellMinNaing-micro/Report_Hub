@@ -8,7 +8,7 @@ import { ImageSelectionProvider } from "@/lib/image-selection-context";
 import { ThemeProvider, useTheme } from "@/lib/theme-context";
 
 function AppNavigator() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   return (
     <Stack
@@ -19,7 +19,6 @@ function AppNavigator() {
         headerTintColor: colors.text,
         headerTitleStyle: { color: colors.text },
         contentStyle: { backgroundColor: colors.background },
-        statusBarStyle: isDark ? "light" : "dark",
       }}
     >
       <Stack.Screen name="index" options={{ title: "Login" }} />
