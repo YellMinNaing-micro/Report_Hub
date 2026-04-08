@@ -19,14 +19,14 @@ export default function ProfileScreen() {
   return (
     <ScreenShell>
       <View className="gap-4">
-        <Box className="items-center rounded-[32px] bg-slate-900 px-6 py-8 shadow-sm">
-          <View className="h-24 w-24 items-center justify-center rounded-full bg-white/10">
-            <UserRound color="#f8fafc" size={44} strokeWidth={2.2} />
+        <Box className="items-center rounded-[32px] bg-slate-200 px-6 py-8 shadow-sm">
+          <View className="h-24 w-24 items-center justify-center rounded-full bg-slate-300">
+            <UserRound color="#334155" size={44} strokeWidth={2.2} />
           </View>
-          <Heading size="xl" className="mt-4 text-white">
+          <Heading size="xl" className="mt-4 text-slate-900">
             Admin Profile
           </Heading>
-          <Text className="mt-2 text-center text-sm text-slate-300">
+          <Text className="mt-2 text-center text-sm text-slate-600">
             Manage your Report Hub session and keep access under the default admin account.
           </Text>
         </Box>
@@ -69,7 +69,12 @@ export default function ProfileScreen() {
           </View>
 
           <View className="mt-5">
-            <ActionButton title="Log Out" onPress={handleLogout} />
+            <ActionButton
+              title="Log Out"
+              onPress={handleLogout}
+              variant="outline"
+              action="negative"
+            />
           </View>
         </Box>
       </View>
