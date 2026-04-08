@@ -1,8 +1,8 @@
 import React from "react";
-import { View } from "react-native";
 import { Redirect, Tabs } from "expo-router";
 import { House, UserRound } from "lucide-react-native/icons";
 
+import { AnimatedTabIcon } from "@/components/animated-tab-icon";
 import { useAuth } from "@/lib/auth-context";
 
 export default function TabLayout() {
@@ -21,21 +21,19 @@ export default function TabLayout() {
         sceneStyle: { backgroundColor: "#f8fafc" },
         tabBarActiveTintColor: "#2563eb",
         tabBarInactiveTintColor: "#64748b",
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: "700",
-        },
+        tabBarShowLabel: false,
         tabBarStyle: {
-          height: 68,
-          paddingTop: 8,
-          paddingBottom: 10,
+          height: 78,
+          paddingTop: 10,
+          paddingBottom: 14,
           backgroundColor: "#ffffff",
           borderTopColor: "#e2e8f0",
+          borderTopWidth: 1,
         },
         tabBarItemStyle: {
-          marginHorizontal: 8,
+          marginHorizontal: 6,
           marginVertical: 6,
-          borderRadius: 18,
+          borderRadius: 24,
         },
       }}
     >
@@ -43,13 +41,12 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "Report Hub",
-          tabBarLabel: "Home",
           tabBarIcon: ({ color, size, focused }) => (
-            <View
-              className={focused ? "rounded-full bg-blue-100 px-4 py-2" : "rounded-full px-4 py-2"}
-            >
-              <House color={color} size={size} strokeWidth={2.2} />
-            </View>
+            <AnimatedTabIcon
+              focused={focused}
+              label="Home"
+              icon={<House color={color} size={size} strokeWidth={2.2} />}
+            />
           ),
         }}
       />
@@ -57,13 +54,12 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
-          tabBarLabel: "Profile",
           tabBarIcon: ({ color, size, focused }) => (
-            <View
-              className={focused ? "rounded-full bg-blue-100 px-4 py-2" : "rounded-full px-4 py-2"}
-            >
-              <UserRound color={color} size={size} strokeWidth={2.2} />
-            </View>
+            <AnimatedTabIcon
+              focused={focused}
+              label="Profile"
+              icon={<UserRound color={color} size={size} strokeWidth={2.2} />}
+            />
           ),
         }}
       />
