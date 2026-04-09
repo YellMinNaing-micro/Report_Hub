@@ -1,16 +1,17 @@
 import React, { useRef, useState } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { Redirect, router } from "expo-router";
 import { CameraView, useCameraPermissions } from "expo-camera";
 
 import { ActionButton } from "@/components/action-button";
+import { RipplePressable } from "@/components/ripple-pressable";
 import { useAuth } from "@/lib/auth-context";
 import { useImageSelection } from "@/lib/image-selection-context";
 import { useTheme } from "@/lib/theme-context";
 
 export default function CameraScreen() {
   const { isAuthenticated } = useAuth();
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const cameraRef = useRef<CameraView | null>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [isCapturing, setIsCapturing] = useState(false);
@@ -76,30 +77,32 @@ export default function CameraScreen() {
         </View>
 
         <View className="mb-6 gap-3">
-          <TouchableOpacity
+          <RipplePressable
             onPress={takePhoto}
             disabled={isCapturing}
             className="h-16 items-center justify-center rounded-full bg-white"
+            style={{ overflow: "hidden" }}
           >
             <Text className="text-base font-semibold text-slate-900">
               {isCapturing ? "Capturing..." : "Capture Photo"}
             </Text>
-          </TouchableOpacity>
+          </RipplePressable>
 
-          <TouchableOpacity
+          <RipplePressable
             onPress={toggleFacing}
             className="h-12 items-center justify-center rounded-2xl bg-black/50"
+            style={{ overflow: "hidden" }}
           >
             <Text className="text-sm font-medium text-white">Flip Camera</Text>
-          </TouchableOpacity>
+          </RipplePressable>
 
-          <TouchableOpacity
+          <RipplePressable
             onPress={() => router.back()}
             className="h-12 items-center justify-center rounded-2xl"
-            style={{ backgroundColor: colors.primary }}
+            style={{ backgroundColor: colors.primary, overflow: "hidden" }}
           >
             <Text className="text-sm font-semibold" style={{ color: colors.primaryText }}>Done</Text>
-          </TouchableOpacity>
+          </RipplePressable>
         </View>
       </View>
     </View>
