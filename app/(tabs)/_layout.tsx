@@ -2,10 +2,11 @@ import React from "react";
 import type { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import { Redirect, Tabs } from "expo-router";
 import { FileText, House, Settings2 } from "lucide-react-native/icons";
-import { Platform, Pressable } from "react-native";
+import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AnimatedTabIcon } from "@/components/animated-tab-icon";
+import { RipplePressable } from "@/components/ripple-pressable";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
 
@@ -15,16 +16,13 @@ type RippleTabButtonProps = Omit<BottomTabBarButtonProps, "ref"> & {
 
 function RippleTabButton({ children, style, rippleColor, ...props }: RippleTabButtonProps) {
   return (
-    <Pressable
+    <RipplePressable
       {...props}
       style={style}
-      android_ripple={{
-        color: rippleColor,
-        borderless: false,
-      }}
+      rippleColor={rippleColor}
     >
       {children}
-    </Pressable>
+    </RipplePressable>
   );
 }
 
