@@ -25,7 +25,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: colors.tabInactiveText,
         tabBarShowLabel: false,
         tabBarStyle: {
-          height: 62 + insets.bottom,
+          height: 20 + insets.bottom,
           paddingTop: 6,
           paddingBottom: Math.max(insets.bottom, 10),
           marginHorizontal: 18,
