@@ -30,18 +30,15 @@ const formatFileSize = (sizeInBytes: number) => {
 
 const formatModifiedDate = (timestamp: number) => {
   const modifiedDate = new Date(timestamp);
-  const now = new Date();
-  const diffInDays = Math.floor((now.getTime() - modifiedDate.getTime()) / (1000 * 60 * 60 * 24));
+  const day = String(modifiedDate.getDate()).padStart(2, "0");
+  const month = modifiedDate.toLocaleString("en-GB", { month: "short" });
+  const year = modifiedDate.getFullYear();
+  const hours = modifiedDate.getHours();
+  const formattedHours = String(hours % 12 || 12).padStart(2, "0");
+  const minutes = String(modifiedDate.getMinutes()).padStart(2, "0");
+  const period = hours >= 12 ? "PM" : "AM";
 
-  if (diffInDays <= 0) {
-    return "Today";
-  }
-
-  if (diffInDays === 1) {
-    return "Yesterday";
-  }
-
-  return `${diffInDays} days ago`;
+  return `${day}/${month}/${year} ${formattedHours}:${minutes}${period}`;
 };
 
 export default function HistoryScreen() {
