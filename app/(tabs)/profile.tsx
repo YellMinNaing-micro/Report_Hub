@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Pressable, Switch, View } from "react-native";
+import { Switch, View } from "react-native";
 import { router } from "expo-router";
 import { LogOut, UserRound } from "lucide-react-native/icons";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { NeumorphCard } from "@/components/neumorph-card";
+import { RipplePressable } from "@/components/ripple-pressable";
 import { ScreenShell } from "@/components/screen-shell";
 import { AppText } from "@/components/themed-text";
 import { useAuth } from "@/lib/auth-context";
@@ -109,7 +110,7 @@ export default function ProfileScreen() {
           </NeumorphCard>
         </View>
 
-        <Pressable onPress={handleLogout}>
+        <RipplePressable onPress={handleLogout} style={{ borderRadius: 24, overflow: "hidden" }}>
           <NeumorphCard className="rounded-[24px] p-4">
             <View className="flex-row items-center gap-3">
               <View
@@ -128,7 +129,7 @@ export default function ProfileScreen() {
               </View>
             </View>
           </NeumorphCard>
-        </Pressable>
+        </RipplePressable>
       </Animated.View>
     </ScreenShell>
   );
