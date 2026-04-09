@@ -1,6 +1,7 @@
 import React from "react";
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 
+import { RipplePressable } from "@/components/ripple-pressable";
 import { useTheme } from "@/lib/theme-context";
 
 type ActionButtonProps = {
@@ -28,10 +29,11 @@ export function ActionButton({
   const isOutline = variant === "outline";
 
   return (
-    <Pressable
+    <RipplePressable
       onPress={onPress}
       disabled={disabled || loading}
       className="overflow-hidden rounded-[20px]"
+      rippleColor={isOutline ? colors.borderSoft : colors.primarySoft}
       style={({ pressed }) => ({
         opacity: disabled || loading ? 0.55 : 1,
         transform: [{ scale: pressed ? 0.988 : 1 }],
@@ -66,6 +68,6 @@ export function ActionButton({
           {title}
         </Text>
       </View>
-    </Pressable>
+    </RipplePressable>
   );
 }
