@@ -1,11 +1,32 @@
 import React from "react";
+import type { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import { Redirect, Tabs } from "expo-router";
 import { FileText, House, Settings2 } from "lucide-react-native/icons";
+import { Platform, Pressable } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AnimatedTabIcon } from "@/components/animated-tab-icon";
 import { useAuth } from "@/lib/auth-context";
 import { useTheme } from "@/lib/theme-context";
+
+type RippleTabButtonProps = Omit<BottomTabBarButtonProps, "ref"> & {
+  rippleColor: string;
+};
+
+function RippleTabButton({ children, style, rippleColor, ...props }: RippleTabButtonProps) {
+  return (
+    <Pressable
+      {...props}
+      style={style}
+      android_ripple={{
+        color: rippleColor,
+        borderless: false,
+      }}
+    >
+      {children}
+    </Pressable>
+  );
+}
 
 export default function TabLayout() {
   const { isAuthenticated } = useAuth();
@@ -24,6 +45,13 @@ export default function TabLayout() {
         tabBarActiveTintColor: colors.tabActive,
         tabBarInactiveTintColor: colors.tabInactiveText,
         tabBarShowLabel: false,
+        tabBarButton: (props) => {
+          const { ref: _ref, ...buttonProps } = props as BottomTabBarButtonProps & {
+            ref?: unknown;
+          };
+
+          return <RippleTabButton {...buttonProps} rippleColor={colors.primarySoft} />;
+        },
         tabBarStyle: {
           height: 20 + insets.bottom,
           paddingTop: 6,
@@ -44,6 +72,7 @@ export default function TabLayout() {
           marginHorizontal: 4,
           marginVertical: 4,
           borderRadius: 16,
+          overflow: Platform.OS === "android" ? "hidden" : "visible",
         },
       }}
     >
