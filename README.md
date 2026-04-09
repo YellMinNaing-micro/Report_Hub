@@ -4,13 +4,16 @@ Report Hub is an Expo + React Native app for collecting images, turning them int
 
 The app includes:
 - Default login with local admin credentials
-- Bottom tab navigation with `Home` and `Profile`
+- Bottom tab navigation with `Home`, `History`, and `Profile`
 - Light and dark theme toggle
 - Gallery image picker
 - Camera capture flow
 - Image preview and remove actions
-- PDF generation from selected images
+- PDF generation from selected images with a custom file name
 - PDF sharing
+- PDF history with saved file timestamps
+- Delete single PDF and delete all PDFs from history
+- Ripple press feedback across tappable buttons on Android
 
 ## Default Login
 
@@ -44,7 +47,8 @@ What it does:
 - Lets the user pick images from the gallery
 - Lets the user open the camera screen
 - Shows selected images in a grid
-- Generates a PDF from selected images
+- Lets the user type a custom PDF file name in a normal text input
+- Generates a PDF from selected images using the latest typed file name
 - Shares the generated PDF
 - Clears all selected images
 
@@ -63,7 +67,25 @@ Packages used:
 - `react`: state and shared image context
 - `react-native`: alerts and UI primitives
 
-### 3. Camera Capture Screen
+### 3. History Tab
+
+What it does:
+- Loads saved PDF files from the app's local document storage
+- Shows each saved PDF with file size and formatted saved time like `09/Apr/2026 10:00AM`
+- Shares a selected PDF
+- Deletes an individual PDF with confirmation
+- Deletes all saved PDFs with confirmation
+
+Main file:
+- [app/(tabs)/history.tsx](/t:/public%20repos/Report-Hub/report-hub/app/(tabs)/history.tsx)
+
+Packages used:
+- `expo-file-system`: reading saved PDF files and deleting them
+- `expo-sharing`: sharing saved PDFs
+- `react`: screen state and refresh behavior
+- `react-native`: alerts, layout, and actions
+
+### 4. Camera Capture Screen
 
 What it does:
 - Requests camera permission
@@ -80,7 +102,7 @@ Packages used:
 - `react`: capture state and refs
 - `react-native`: camera controls and overlays
 
-### 4. Profile Tab
+### 5. Profile Tab
 
 What it does:
 - Shows the signed-in admin profile
@@ -96,7 +118,7 @@ Packages used:
 - `react`: theme and auth hooks
 - `react-native`: layout and text UI
 
-### 5. Theme System
+### 6. Theme System
 
 What it does:
 - Supports light mode and dark mode
@@ -114,11 +136,12 @@ Packages used:
 - `expo-status-bar`: correct status bar style for light/dark mode
 - `react-native`: theming styles and layout containers
 
-### 6. Bottom Tab Navigation
+### 7. Bottom Tab Navigation
 
 What it does:
-- Creates `Home` and `Profile` tabs
+- Creates `Home`, `History`, and `Profile` tabs
 - Shows animated active tab styling
+- Adds ripple feedback when tabs are pressed on Android
 - Protects the tab area behind authentication
 
 Main files:
@@ -130,19 +153,21 @@ Packages used:
 - `react-native-reanimated`: active tab animation
 - `lucide-react-native`: tab icons
 
-### 7. Shared UI Components
+### 8. Shared UI Components
 
 What they do:
 - `ScreenShell`: shared page background and scroll layout
 - `NeumorphCard`: reusable surface card
 - `ActionButton`: reusable primary and outline buttons
 - `ImagePreviewGrid`: reusable image list preview
+- `RipplePressable`: reusable ripple-enabled pressable for Android touch feedback
 
 Main files:
 - [components/screen-shell.tsx](/t:/public%20repos/Report-Hub/report-hub/components/screen-shell.tsx)
 - [components/neumorph-card.tsx](/t:/public%20repos/Report-Hub/report-hub/components/neumorph-card.tsx)
 - [components/action-button.tsx](/t:/public%20repos/Report-Hub/report-hub/components/action-button.tsx)
 - [components/image-preview-grid.tsx](/t:/public%20repos/Report-Hub/report-hub/components/image-preview-grid.tsx)
+- [components/ripple-pressable.tsx](/t:/public%20repos/Report-Hub/report-hub/components/ripple-pressable.tsx)
 
 Packages used:
 - `react-native`: UI layout and touch handling
@@ -156,9 +181,9 @@ Packages used:
 | `expo-router` | routing, tabs, redirects | file-based navigation |
 | `expo-camera` | camera screen | capture images from device camera |
 | `expo-image-picker` | home screen | choose images from gallery |
-| `expo-file-system` | PDF utility | read image files and save generated PDF |
+| `expo-file-system` | PDF utility and history screen | read image files, save generated PDF, and delete saved PDFs |
 | `expo-print` | PDF utility | build PDF from HTML |
-| `expo-sharing` | home screen | share generated PDF |
+| `expo-sharing` | home and history screens | share generated PDF |
 | `expo-status-bar` | root layout | light/dark status bar appearance |
 | `react-native-safe-area-context` | app provider | safe area support |
 | `react-native-reanimated` | tab animation and screen entrance | smooth UI animations |
@@ -181,6 +206,7 @@ app/
   (tabs)/
     _layout.tsx          Bottom tab layout
     home.tsx             Home/report builder screen
+    history.tsx          Saved PDF history screen
     profile.tsx          Profile and theme screen
 
 components/
@@ -188,6 +214,7 @@ components/
   animated-tab-icon.tsx
   image-preview-grid.tsx
   neumorph-card.tsx
+  ripple-pressable.tsx
   screen-shell.tsx
 
 lib/
@@ -225,3 +252,5 @@ npm run typecheck
 - The project uses `patch-package` to keep fixes for some dependency issues after install.
 - Theme mode is currently stored in memory, so it resets after app restart.
 - Login is local and static right now, not connected to a backend.
+- Generated PDFs are stored in the app's local document directory until the user deletes them from History.
+- Android ripple feedback is applied through shared pressable components. iOS and web do not show the same native ripple effect.
