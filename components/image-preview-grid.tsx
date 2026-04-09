@@ -1,7 +1,8 @@
 import React from "react";
-import { FlatList, Image, Pressable, View } from "react-native";
+import { FlatList, Image, View } from "react-native";
 import { ImageIcon, Trash2 } from "lucide-react-native";
 
+import { RipplePressable } from "@/components/ripple-pressable";
 import { AppText } from "@/components/themed-text";
 import { SelectedImage } from "@/lib/image-selection-context";
 import { useTheme } from "@/lib/theme-context";
@@ -28,13 +29,14 @@ export function ImagePreviewGrid({ images, onRemove }: ImagePreviewGridProps) {
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
           <Image source={{ uri: item.uri }} className="h-24 w-full rounded-[14px] bg-slate-200" />
-          <Pressable
+          <RipplePressable
             onPress={() => onRemove(item.id)}
             className="absolute right-3 top-3 h-7 w-7 items-center justify-center rounded-full"
-            style={{ backgroundColor: colors.dangerSoft }}
+            rippleColor={colors.dangerSoft}
+            style={{ backgroundColor: colors.dangerSoft, overflow: "hidden" }}
           >
             <Trash2 color={colors.danger} size={14} strokeWidth={2.3} />
-          </Pressable>
+          </RipplePressable>
           <AppText className="pt-3 text-center text-xs" tone="subtle" weight="semibold">
             IMG_{index + 1}
           </AppText>
