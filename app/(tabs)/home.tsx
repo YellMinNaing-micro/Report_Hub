@@ -201,8 +201,8 @@ export default function HomeScreen() {
                   autoCapitalize="characters"
                   placeholder="REPORT_V1"
                   placeholderTextColor={colors.textSubtle}
-                  className="flex-1 px-0 py-1 text-right text-sm font-semibold"
-                  style={{ color: colors.text, textAlign: "right" }}
+                  className="flex-1 px-0 py-1 text-sm font-semibold"
+                  style={{ color: colors.text }}
                 />
                 <AppText className="pl-2 text-sm" tone="muted" weight="medium">
                   .pdf
