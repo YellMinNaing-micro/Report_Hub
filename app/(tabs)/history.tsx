@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system/legacy";
-import { FileText, Share2 } from "lucide-react-native";
+import { FileText, Share2, Trash2 } from "lucide-react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { NeumorphCard } from "@/components/neumorph-card";
@@ -96,16 +96,74 @@ export default function HistoryScreen() {
     });
   };
 
+  const deletePdf = useCallback(
+    (item: PdfHistoryItem) => {
+      Alert.alert("Delete PDF", `Delete ${item.name}?`, [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            void (async () => {
+              try {
+                await FileSystem.deleteAsync(item.uri, { idempotent: true });
+                setItems((current) => current.filter((entry) => entry.uri !== item.uri));
+              } catch {
+                Alert.alert("Delete Failed", "Unable to delete this PDF right now.");
+              }
+            })();
+          },
+        },
+      ]);
+    },
+    [setItems],
+  );
+
+  const deleteAllPdfs = useCallback(() => {
+    Alert.alert("Delete All PDFs", "Delete all saved PDFs from this device?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete All",
+        style: "destructive",
+        onPress: () => {
+          void (async () => {
+            try {
+              await Promise.all(
+                items.map((item) => FileSystem.deleteAsync(item.uri, { idempotent: true })),
+              );
+              setItems([]);
+            } catch {
+              Alert.alert("Delete Failed", "Unable to delete all PDFs right now.");
+            }
+          })();
+        },
+      },
+    ]);
+  }, [items]);
+
   return (
     <ScreenShell>
       <Animated.View entering={FadeInDown.duration(260)} className="gap-5 pb-24">
-        <View>
+        <View className="flex-row items-end justify-between gap-4">
+          <View className="flex-1">
           <AppText className="text-xs uppercase tracking-[1.5px]" tone="primary" weight="semibold">
             Archive
           </AppText>
           <AppText className="mt-2 text-[34px] leading-9" weight="bold">
             History
           </AppText>
+          </View>
+          {items.length ? (
+            <RipplePressable
+              onPress={deleteAllPdfs}
+              className="rounded-full px-4 py-2"
+              style={{ backgroundColor: colors.dangerSoft, overflow: "hidden" }}
+            >
+              <AppText className="text-xs uppercase tracking-[1.1px]" tone="danger" weight="bold">
+                Delete All
+              </AppText>
+            </RipplePressable>
+          ) : null}
         </View>
 
         {items.length ? (
@@ -129,13 +187,22 @@ export default function HistoryScreen() {
                     </AppText>
                   </View>
 
-                  <RipplePressable
-                    onPress={() => void sharePdf(item.uri)}
-                    className="h-10 w-10 items-center justify-center rounded-full"
-                    style={{ backgroundColor: colors.surfaceInset, overflow: "hidden" }}
-                  >
-                    <Share2 color={colors.textSubtle} size={17} strokeWidth={2.1} />
-                  </RipplePressable>
+                  <View className="flex-row gap-2">
+                    <RipplePressable
+                      onPress={() => void sharePdf(item.uri)}
+                      className="h-10 w-10 items-center justify-center rounded-full"
+                      style={{ backgroundColor: colors.surfaceInset, overflow: "hidden" }}
+                    >
+                      <Share2 color={colors.textSubtle} size={17} strokeWidth={2.1} />
+                    </RipplePressable>
+                    <RipplePressable
+                      onPress={() => deletePdf(item)}
+                      className="h-10 w-10 items-center justify-center rounded-full"
+                      style={{ backgroundColor: colors.dangerSoft, overflow: "hidden" }}
+                    >
+                      <Trash2 color={colors.danger} size={17} strokeWidth={2.1} />
+                    </RipplePressable>
+                  </View>
                 </View>
               </NeumorphCard>
             ))}
