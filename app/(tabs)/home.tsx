@@ -14,13 +14,12 @@ import { ScreenShell } from "@/components/screen-shell";
 import { AppText } from "@/components/themed-text";
 import { useImageSelection } from "@/lib/image-selection-context";
 import { useTheme } from "@/lib/theme-context";
-import { generatePdfFromImages, getPdfBaseName, getPdfFileName, renamePdfFile } from "@/utils/pdf";
+import { generatePdfFromImages, getPdfBaseName } from "@/utils/pdf";
 
 export default function HomeScreen() {
   const { colors } = useTheme();
   const { images, addImages, clearImages, removeImage } = useImageSelection();
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
-  const [isRenamingPdf, setIsRenamingPdf] = useState(false);
   const [pdfUri, setPdfUri] = useState<string | null>(null);
   const [pdfFileName, setPdfFileName] = useState("REPORT_V1");
 
@@ -87,24 +86,9 @@ export default function HomeScreen() {
     });
   };
 
-  const handleRenamePdf = async () => {
-    if (!pdfUri) {
-      Alert.alert("No PDF", "Generate a PDF first.");
-      return;
-    }
-
-    try {
-      setIsRenamingPdf(true);
-      const renamedPdfUri = await renamePdfFile(pdfUri, pdfFileName);
-      setPdfUri(renamedPdfUri);
-      setPdfFileName(getPdfBaseName(renamedPdfUri));
-      Alert.alert("PDF Renamed", `Saved as:\n${getPdfFileName(renamedPdfUri)}`);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Failed to rename PDF.";
-      Alert.alert("Rename Error", message);
-    } finally {
-      setIsRenamingPdf(false);
-    }
+  const handlePdfFileNameChange = (value: string) => {
+    setPdfFileName(value);
+    setPdfUri(null);
   };
 
   return (
@@ -212,10 +196,10 @@ export default function HomeScreen() {
               </AppText>
               <View className="flex-row items-center pt-1">
                 <TextInput
-                value={pdfFileName}
-                onChangeText={setPdfFileName}
-                autoCapitalize="characters"
-                placeholder="REPORT_V1"
+                  value={pdfFileName}
+                  onChangeText={handlePdfFileNameChange}
+                  autoCapitalize="characters"
+                  placeholder="REPORT_V1"
                   placeholderTextColor={colors.textSubtle}
                   className="flex-1 px-0 py-1 text-right text-sm font-semibold"
                   style={{ color: colors.text, textAlign: "right" }}
@@ -255,13 +239,6 @@ export default function HomeScreen() {
                 onPress={sharePdf}
                 variant="outline"
                 icon={<Share2 color={colors.textMuted} size={18} strokeWidth={2.2} />}
-              />
-              <ActionButton
-                title={isRenamingPdf ? "Updating Saved File Name" : "Update Saved File Name"}
-                onPress={handleRenamePdf}
-                disabled={!pdfFileName.trim()}
-                loading={isRenamingPdf}
-                variant="outline"
               />
             </View>
 
