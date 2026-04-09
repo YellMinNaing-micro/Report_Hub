@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system/legacy";
@@ -7,6 +7,7 @@ import { FileText, Share2 } from "lucide-react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { NeumorphCard } from "@/components/neumorph-card";
+import { RipplePressable } from "@/components/ripple-pressable";
 import { ScreenShell } from "@/components/screen-shell";
 import { AppText } from "@/components/themed-text";
 import { useTheme } from "@/lib/theme-context";
@@ -131,13 +132,13 @@ export default function HistoryScreen() {
                     </AppText>
                   </View>
 
-                  <Pressable
+                  <RipplePressable
                     onPress={() => void sharePdf(item.uri)}
                     className="h-10 w-10 items-center justify-center rounded-full"
-                    style={{ backgroundColor: colors.surfaceInset }}
+                    style={{ backgroundColor: colors.surfaceInset, overflow: "hidden" }}
                   >
                     <Share2 color={colors.textSubtle} size={17} strokeWidth={2.1} />
-                  </Pressable>
+                  </RipplePressable>
                 </View>
               </NeumorphCard>
             ))}
