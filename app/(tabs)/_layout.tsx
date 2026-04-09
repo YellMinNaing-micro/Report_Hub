@@ -30,6 +30,8 @@ export default function TabLayout() {
   const { isAuthenticated } = useAuth();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
+  const bottomInset = Math.max(insets.bottom, Platform.OS === "android" ? 12 : 8);
+  const tabBarHeight = 68 + bottomInset;
 
   if (!isAuthenticated) {
     return <Redirect href="/" />;
@@ -51,11 +53,12 @@ export default function TabLayout() {
           return <RippleTabButton {...buttonProps} rippleColor={colors.primarySoft} />;
         },
         tabBarStyle: {
-          height: 20 + insets.bottom,
-          paddingTop: 6,
-          paddingBottom: Math.max(insets.bottom, 10),
-          marginHorizontal: 18,
-          marginBottom: Math.max(insets.bottom > 0 ? 6 : 10, 6),
+          height: tabBarHeight,
+          paddingTop: 8,
+          paddingBottom: bottomInset,
+          left: 18,
+          right: 18,
+          bottom: Platform.OS === "android" ? 8 : 0,
           borderRadius: 22,
           backgroundColor: colors.tabBar,
           borderTopWidth: 0,
