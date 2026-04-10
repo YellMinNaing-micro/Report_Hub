@@ -30,8 +30,8 @@ export default function TabLayout() {
   const { isAuthenticated } = useAuth();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const bottomInset = Math.max(insets.bottom, Platform.OS === "android" ? 12 : 8);
-  const tabBarHeight = 68 + bottomInset;
+  const bottomOffset = Math.max(insets.bottom, Platform.OS === "android" ? 16 : 8);
+  const tabBarHeight = 68;
 
   if (!isAuthenticated) {
     return <Redirect href="/" />;
@@ -54,12 +54,14 @@ export default function TabLayout() {
         },
         tabBarStyle: {
           height: tabBarHeight,
-          paddingTop: 8,
-          paddingBottom: bottomInset,
-          left: 18,
-          right: 18,
-          bottom: Platform.OS === "android" ? 8 : 0,
-          borderRadius: 22,
+          alignItems: "center",
+          justifyContent: "center",
+          paddingTop: 6,
+          paddingBottom: 6,
+          left: 20,
+          right: 20,
+          bottom: bottomOffset,
+          borderRadius: 20,
           backgroundColor: colors.tabBar,
           borderTopWidth: 0,
           position: "absolute",
@@ -70,9 +72,10 @@ export default function TabLayout() {
           elevation: 7,
         },
         tabBarItemStyle: {
-          marginHorizontal: 4,
-          marginVertical: 4,
-          borderRadius: 16,
+          height: 56,
+          justifyContent: "center",
+          marginHorizontal: 3,
+          borderRadius: 14,
           overflow: Platform.OS === "android" ? "hidden" : "visible",
         },
       }}
