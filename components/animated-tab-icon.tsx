@@ -40,7 +40,7 @@ export function AnimatedTabIcon({ icon, label, focused }: AnimatedTabIconProps) 
   return (
     <Animated.View
       style={containerStyle}
-      className="h-12 min-w-[64px] items-center justify-center rounded-[14px] px-3 py-1"
+      className="h-14 min-w-[64px] items-center justify-center rounded-[14px] px-3 py-1"
     >
       <View>{icon}</View>
       <Animated.View style={labelContainerStyle} className="overflow-hidden">
