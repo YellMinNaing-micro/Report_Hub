@@ -30,7 +30,7 @@ export default function TabLayout() {
   const { isAuthenticated } = useAuth();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const bottomOffset = Math.max(insets.bottom, Platform.OS === "android" ? 16 : 8);
+  const bottomOffset = 4;
   const tabBarHeight = 68;
 
   if (!isAuthenticated) {
@@ -54,10 +54,8 @@ export default function TabLayout() {
         },
         tabBarStyle: {
           height: tabBarHeight,
-          alignItems: "center",
-          justifyContent: "center",
-          paddingTop: 6,
-          paddingBottom: 6,
+          paddingTop: 12,
+          paddingHorizontal: 20,
           left: 20,
           right: 20,
           bottom: bottomOffset,
