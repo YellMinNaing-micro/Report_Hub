@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -16,7 +16,7 @@ type AnimatedTabIconProps = {
 };
 
 export function AnimatedTabIcon({ icon, label, focused }: AnimatedTabIconProps) {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const progress = useSharedValue(focused ? 1 : 0);
 
   useEffect(() => {
@@ -25,34 +25,35 @@ export function AnimatedTabIcon({ icon, label, focused }: AnimatedTabIconProps) 
 
   const containerStyle = useAnimatedStyle(() => ({
     backgroundColor: focused ? colors.tabActive : "transparent",
-    shadowColor: colors.shadow,
-    shadowOpacity: interpolate(progress.value, [0, 1], [0, isDark ? 0.24 : 0.12]),
-    shadowRadius: interpolate(progress.value, [0, 1], [0, 16]),
-    shadowOffset: { width: 0, height: 10 },
-    transform: [
-      { translateY: interpolate(progress.value, [0, 1], [0, -2]) },
-      { scale: interpolate(progress.value, [0, 1], [1, 1.03]) },
-    ],
+    opacity: interpolate(progress.value, [0, 1], [0.86, 1]),
   }));
 
   const labelStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(progress.value, [0, 1], [0.68, 1]),
-    transform: [{ translateY: interpolate(progress.value, [0, 1], [0, 1]) }],
+    opacity: progress.value,
+    transform: [{ translateY: interpolate(progress.value, [0, 1], [-2, 0]) }],
+  }));
+
+  const labelContainerStyle = useAnimatedStyle(() => ({
+    height: interpolate(progress.value, [0, 1], [0, 15]),
   }));
 
   return (
     <Animated.View
       style={containerStyle}
-      className="min-w-[78px] items-center justify-center rounded-[16px] px-3 py-2"
+      className="h-12 min-w-[64px] items-center justify-center rounded-[14px] px-3 py-1"
     >
       <View>{icon}</View>
-      <Animated.View style={labelStyle}>
-        <Text
-          className={focused ? "mt-1 text-[11px] font-bold" : "mt-1 text-[11px] font-semibold"}
-          style={{ color: focused ? colors.primaryText : colors.tabInactiveText }}
+      <Animated.View style={labelContainerStyle} className="overflow-hidden">
+        <Animated.Text
+          style={[
+            labelStyle,
+            { color: focused ? colors.primaryText : colors.tabInactiveText },
+          ]}
+          className={focused ? "mt-0.5 text-[10px] font-bold" : "mt-0.5 text-[10px] font-semibold"}
+          numberOfLines={1}
         >
           {label}
-        </Text>
+        </Animated.Text>
       </Animated.View>
     </Animated.View>
   );
