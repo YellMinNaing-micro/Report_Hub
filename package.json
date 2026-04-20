@@ -21,6 +21,7 @@
     "expo-camera": "~17.0.10",
     "expo-constants": "~18.0.13",
     "expo-file-system": "~19.0.21",
+    "expo-image-manipulator": "^55.0.15",
     "expo-image-picker": "~17.0.10",
     "expo-linking": "~8.0.11",
     "expo-print": "~15.0.8",
