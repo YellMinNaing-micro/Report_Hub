@@ -73,21 +73,92 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
-          body { font-family: Arial, sans-serif; padding: 20px; }
-          h1 { margin-bottom: 18px; }
-          .item { page-break-inside: avoid; margin-bottom: 24px; }
-          img { width: 100%; max-width: 100%; border: 1px solid #e2e8f0; border-radius: 8px; }
+          @page {
+            size: A4 portrait;
+            margin: 12mm;
+          }
+
+          * {
+            box-sizing: border-box;
+          }
+
+          html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #0f172a;
+            background: #ffffff;
+          }
+
+          .page {
+            min-height: 273mm;
+            display: flex;
+            flex-direction: column;
+            page-break-after: always;
+            break-after: page;
+          }
+
+          .page:last-child {
+            page-break-after: auto;
+            break-after: auto;
+          }
+
+          .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8mm;
+            padding-bottom: 4mm;
+            border-bottom: 1px solid #cbd5e1;
+          }
+
+          .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+          }
+
+          .page-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            margin: 0;
+          }
+
+          .image-frame {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f8fafc;
+          }
+
+          .image-frame img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 248mm;
+            object-fit: contain;
+          }
         </style>
       </head>
       <body>
-        <h1>Report Images</h1>
         ${dataUris
           .map(
             (dataUri, index) => `
-          <div class="item">
-            <p><strong>Image ${index + 1}</strong></p>
-            <img src="${dataUri}" />
-          </div>
+          <section class="page">
+            <div class="page-header">
+              <p class="page-title">Report Image</p>
+              <p class="page-label">Page ${index + 1} of ${dataUris.length}</p>
+            </div>
+            <div class="image-frame">
+              <img src="${dataUri}" />
+            </div>
+          </section>
         `,
           )
           .join("")}
