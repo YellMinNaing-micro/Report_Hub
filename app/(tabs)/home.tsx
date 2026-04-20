@@ -16,16 +16,24 @@ import { useImageSelection } from "@/lib/image-selection-context";
 import { useTheme } from "@/lib/theme-context";
 import { generatePdfFromImages, getPdfBaseName } from "@/utils/pdf";
 
+const DEFAULT_PDF_FILE_NAME = "REPORT_V1";
+
 export default function HomeScreen() {
   const { colors } = useTheme();
   const { images, addImages, clearImages, removeImage } = useImageSelection();
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [pdfUri, setPdfUri] = useState<string | null>(null);
-  const [pdfFileName, setPdfFileName] = useState("REPORT_V1");
+  const [pdfFileName, setPdfFileName] = useState(DEFAULT_PDF_FILE_NAME);
 
   const imageUris = useMemo(() => images.map((image) => image.uri), [images]);
   const hasImages = images.length > 0;
   const hasPdf = Boolean(pdfUri);
+
+  const resetHomeState = () => {
+    clearImages();
+    setPdfUri(null);
+    setPdfFileName(DEFAULT_PDF_FILE_NAME);
+  };
 
   const pickFromGallery = async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -79,11 +87,18 @@ export default function HomeScreen() {
       return;
     }
 
-    await Sharing.shareAsync(pdfUri, {
-      mimeType: "application/pdf",
-      dialogTitle: "Share report PDF",
-      UTI: "com.adobe.pdf",
-    });
+    try {
+      await Sharing.shareAsync(pdfUri, {
+        mimeType: "application/pdf",
+        dialogTitle: "Share report PDF",
+        UTI: "com.adobe.pdf",
+      });
+
+      resetHomeState();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to share PDF.";
+      Alert.alert("Share Error", message);
+    }
   };
 
   const handlePdfFileNameChange = (value: string) => {
