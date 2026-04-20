@@ -17,6 +17,7 @@ import { useTheme } from "@/lib/theme-context";
 import { generatePdfFromImages, getPdfBaseName } from "@/utils/pdf";
 
 const DEFAULT_PDF_FILE_NAME = "REPORT_V1";
+const IMAGE_PICKER_QUALITY = 0.65;
 
 export default function HomeScreen() {
   const { colors } = useTheme();
@@ -46,7 +47,7 @@ export default function HomeScreen() {
       mediaTypes: ["images"],
       allowsMultipleSelection: true,
       selectionLimit: 0,
-      quality: 1,
+      quality: IMAGE_PICKER_QUALITY,
     });
 
     if (!result.canceled && result.assets.length > 0) {
