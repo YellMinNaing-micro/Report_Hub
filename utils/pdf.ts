@@ -91,9 +91,9 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
           }
 
           .page {
-            min-height: 273mm;
-            display: flex;
-            flex-direction: column;
+            height: 273mm;
+            padding: 0;
+            overflow: hidden;
             page-break-after: always;
             break-after: page;
           }
@@ -107,8 +107,9 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8mm;
-            padding-bottom: 4mm;
+            height: 12mm;
+            margin-bottom: 4mm;
+            padding-bottom: 3mm;
             border-bottom: 1px solid #cbd5e1;
           }
 
@@ -126,10 +127,10 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
           }
 
           .image-frame {
-            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 252mm;
             border: 1px solid #cbd5e1;
             border-radius: 10px;
             overflow: hidden;
@@ -141,7 +142,7 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
             width: auto;
             height: auto;
             max-width: 100%;
-            max-height: 248mm;
+            max-height: 246mm;
             object-fit: contain;
           }
         </style>
