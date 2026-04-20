@@ -88,6 +88,8 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
             font-family: Arial, sans-serif;
             color: #0f172a;
             background: #ffffff;
+            width: 100%;
+            height: 100%;
           }
 
           .page {
@@ -103,46 +105,21 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
             break-after: auto;
           }
 
-          .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 12mm;
-            margin-bottom: 4mm;
-            padding-bottom: 3mm;
-            border-bottom: 1px solid #cbd5e1;
-          }
-
-          .page-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 0;
-          }
-
-          .page-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #475569;
-            margin: 0;
-          }
-
           .image-frame {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 252mm;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
+            width: 100%;
+            height: 100%;
+            padding: 2mm;
             overflow: hidden;
-            background: #f8fafc;
+            background: #ffffff;
           }
 
           .image-frame img {
             display: block;
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 246mm;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
           }
         </style>
@@ -150,12 +127,8 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
       <body>
         ${dataUris
           .map(
-            (dataUri, index) => `
+            (dataUri) => `
           <section class="page">
-            <div class="page-header">
-              <p class="page-title">Report Image</p>
-              <p class="page-label">Page ${index + 1} of ${dataUris.length}</p>
-            </div>
             <div class="image-frame">
               <img src="${dataUri}" />
             </div>
