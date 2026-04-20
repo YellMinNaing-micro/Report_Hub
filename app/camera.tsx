@@ -9,6 +9,8 @@ import { useAuth } from "@/lib/auth-context";
 import { useImageSelection } from "@/lib/image-selection-context";
 import { useTheme } from "@/lib/theme-context";
 
+const CAMERA_CAPTURE_QUALITY = 0.65;
+
 export default function CameraScreen() {
   const { isAuthenticated } = useAuth();
   const { colors } = useTheme();
@@ -33,7 +35,7 @@ export default function CameraScreen() {
 
     try {
       setIsCapturing(true);
-      const photo = await cameraRef.current.takePictureAsync({ quality: 1 });
+      const photo = await cameraRef.current.takePictureAsync({ quality: CAMERA_CAPTURE_QUALITY });
       if (photo?.uri) {
         addImages([photo.uri], "camera");
       }
