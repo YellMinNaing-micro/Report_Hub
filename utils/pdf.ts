@@ -1,6 +1,11 @@
 import * as FileSystem from "expo-file-system/legacy";
+import { Image } from "react-native";
+import { SaveFormat, manipulateAsync } from "expo-image-manipulator";
 import * as Print from "expo-print";
 
+const PDF_IMAGE_MAX_WIDTH = 1080;
+const PDF_IMAGE_MAX_HEIGHT = 1600;
+const PDF_IMAGE_COMPRESS_QUALITY = 0.6;
 const guessMimeType = (uri: string) => {
   const lower = uri.toLowerCase();
   if (lower.endsWith(".png")) return "image/png";
@@ -8,11 +13,51 @@ const guessMimeType = (uri: string) => {
   return "image/jpeg";
 };
 
+const getImageSize = (uri: string) =>
+  new Promise<{ width: number; height: number }>((resolve, reject) => {
+    Image.getSize(
+      uri,
+      (width, height) => resolve({ width, height }),
+      (error) => reject(error)
+    );
+  });
+
+const getResizedDimensions = (width: number, height: number) => {
+  const widthRatio = PDF_IMAGE_MAX_WIDTH / width;
+  const heightRatio = PDF_IMAGE_MAX_HEIGHT / height;
+  const scale = Math.min(widthRatio, heightRatio, 1);
+
+  return {
+    width: Math.max(1, Math.round(width * scale)),
+    height: Math.max(1, Math.round(height * scale)),
+  };
+};
+
+const optimizeImageForPdf = async (uri: string) => {
+  const { width, height } = await getImageSize(uri);
+  const targetSize = getResizedDimensions(width, height);
+
+  return manipulateAsync(
+    uri,
+    [{ resize: targetSize }],
+    {
+      compress: PDF_IMAGE_COMPRESS_QUALITY,
+      format: SaveFormat.JPEG,
+    }
+  );
+};
+
 const imageToDataUri = async (uri: string) => {
-  const base64 = await FileSystem.readAsStringAsync(uri, {
+  const optimizedImage = await optimizeImageForPdf(uri);
+  const base64 = await FileSystem.readAsStringAsync(optimizedImage.uri, {
     encoding: FileSystem.EncodingType.Base64,
   });
-  return `data:${guessMimeType(uri)};base64,${base64}`;
+
+  if (optimizedImage.uri !== uri) {
+    await FileSystem.deleteAsync(optimizedImage.uri, { idempotent: true });
+  }
+
+  return `data:${guessMimeType(optimizedImage.uri)};base64,${base64}`;
 };
 
 const PDF_EXTENSION = ".pdf";
@@ -66,7 +111,10 @@ export async function generatePdfFromImages(imageUris: string[], fileName?: stri
     throw new Error("Document directory is unavailable on this device.");
   }
 
-  const dataUris = await Promise.all(imageUris.map(imageToDataUri));
+  const dataUris: string[] = [];
+  for (const imageUri of imageUris) {
+    dataUris.push(await imageToDataUri(imageUri));
+  }
 
   const html = `
     <html>
