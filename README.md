@@ -33,8 +33,8 @@ What it does:
 - Allows logout from the Profile screen
 
 Main files:
-- [app/index.tsx](/t:/public%20repos/Report-Hub/report-hub/app/index.tsx)
-- [lib/auth-context.tsx](/t:/public%20repos/Report-Hub/report-hub/lib/auth-context.tsx)
+- [app/index.tsx](app/index.tsx)
+- [lib/auth-context.tsx](lib/auth-context.tsx)
 
 Packages used:
 - `expo-router`: screen routing and redirects
@@ -53,10 +53,10 @@ What it does:
 - Clears all selected images
 
 Main files:
-- [app/(tabs)/home.tsx](/t:/public%20repos/Report-Hub/report-hub/app/(tabs)/home.tsx)
-- [components/image-preview-grid.tsx](/t:/public%20repos/Report-Hub/report-hub/components/image-preview-grid.tsx)
-- [lib/image-selection-context.tsx](/t:/public%20repos/Report-Hub/report-hub/lib/image-selection-context.tsx)
-- [utils/pdf.ts](/t:/public%20repos/Report-Hub/report-hub/utils/pdf.ts)
+- [app/(tabs)/home.tsx](app/%28tabs%29/home.tsx)
+- [components/image-preview-grid.tsx](components/image-preview-grid.tsx)
+- [lib/image-selection-context.tsx](lib/image-selection-context.tsx)
+- [utils/pdf.ts](utils/pdf.ts)
 
 Packages used:
 - `expo-image-picker`: selecting images from gallery
@@ -77,7 +77,7 @@ What it does:
 - Deletes all saved PDFs with confirmation
 
 Main file:
-- [app/(tabs)/history.tsx](/t:/public%20repos/Report-Hub/report-hub/app/(tabs)/history.tsx)
+- [app/(tabs)/history.tsx](app/%28tabs%29/history.tsx)
 
 Packages used:
 - `expo-file-system`: reading saved PDF files and deleting them
@@ -94,7 +94,7 @@ What it does:
 - Supports front/back camera switch
 
 Main file:
-- [app/camera.tsx](/t:/public%20repos/Report-Hub/report-hub/app/camera.tsx)
+- [app/camera.tsx](app/camera.tsx)
 
 Packages used:
 - `expo-camera`: camera permission and camera capture
@@ -110,7 +110,7 @@ What it does:
 - Provides logout action
 
 Main file:
-- [app/(tabs)/profile.tsx](/t:/public%20repos/Report-Hub/report-hub/app/(tabs)/profile.tsx)
+- [app/(tabs)/profile.tsx](app/%28tabs%29/profile.tsx)
 
 Packages used:
 - `expo-router`: logout redirect
@@ -126,10 +126,10 @@ What it does:
 - Updates colors across cards, buttons, tabs, scroll backgrounds, and screens
 
 Main files:
-- [lib/theme-context.tsx](/t:/public%20repos/Report-Hub/report-hub/lib/theme-context.tsx)
-- [components/screen-shell.tsx](/t:/public%20repos/Report-Hub/report-hub/components/screen-shell.tsx)
-- [components/neumorph-card.tsx](/t:/public%20repos/Report-Hub/report-hub/components/neumorph-card.tsx)
-- [components/action-button.tsx](/t:/public%20repos/Report-Hub/report-hub/components/action-button.tsx)
+- [lib/theme-context.tsx](lib/theme-context.tsx)
+- [components/screen-shell.tsx](components/screen-shell.tsx)
+- [components/neumorph-card.tsx](components/neumorph-card.tsx)
+- [components/action-button.tsx](components/action-button.tsx)
 
 Packages used:
 - `react`: theme context and toggle logic
@@ -145,8 +145,8 @@ What it does:
 - Protects the tab area behind authentication
 
 Main files:
-- [app/(tabs)/_layout.tsx](/t:/public%20repos/Report-Hub/report-hub/app/(tabs)/_layout.tsx)
-- [components/animated-tab-icon.tsx](/t:/public%20repos/Report-Hub/report-hub/components/animated-tab-icon.tsx)
+- [app/(tabs)/_layout.tsx](app/%28tabs%29/_layout.tsx)
+- [components/animated-tab-icon.tsx](components/animated-tab-icon.tsx)
 
 Packages used:
 - `expo-router`: tab navigation
@@ -163,11 +163,11 @@ What they do:
 - `RipplePressable`: reusable ripple-enabled pressable for Android touch feedback
 
 Main files:
-- [components/screen-shell.tsx](/t:/public%20repos/Report-Hub/report-hub/components/screen-shell.tsx)
-- [components/neumorph-card.tsx](/t:/public%20repos/Report-Hub/report-hub/components/neumorph-card.tsx)
-- [components/action-button.tsx](/t:/public%20repos/Report-Hub/report-hub/components/action-button.tsx)
-- [components/image-preview-grid.tsx](/t:/public%20repos/Report-Hub/report-hub/components/image-preview-grid.tsx)
-- [components/ripple-pressable.tsx](/t:/public%20repos/Report-Hub/report-hub/components/ripple-pressable.tsx)
+- [components/screen-shell.tsx](components/screen-shell.tsx)
+- [components/neumorph-card.tsx](components/neumorph-card.tsx)
+- [components/action-button.tsx](components/action-button.tsx)
+- [components/image-preview-grid.tsx](components/image-preview-grid.tsx)
+- [components/ripple-pressable.tsx](components/ripple-pressable.tsx)
 
 Packages used:
 - `react-native`: UI layout and touch handling
